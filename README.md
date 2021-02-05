@@ -7,7 +7,7 @@ Books i read:
 
 This repository also contains programming exercise and experimental programming.
 
-Several important knowledges:
+Several important knowledge:
 
 1. [Data Structures](https://github.com/agusrichard/learning-java/tree/master/collectionsPractice)
 2. [JavaFX Practices](https://github.com/agusrichard/learning-java/tree/master/javaFXPractice)
