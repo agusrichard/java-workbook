@@ -1,10 +1,9 @@
 public class Experiment {
   public static void main(String[] args) {
-    double sekarAge = 21.2;
-    int myAge = (int) sekarAge;
-    System.out.println(myAge);
+    String[] names = {"Agus", "Richard", "Lubis"};
+    System.out.println(names);
 
-    String name = "Sekardayu Hana Pradiani";
-    System.out.println(name.length());
+    int[] nums = {1, 2, 3, 4, 5};
+    System.out.println(nums);
   }
 }
