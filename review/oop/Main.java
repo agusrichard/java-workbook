@@ -1,3 +1,5 @@
+package oop;
+
 public class Main {
     private int x, y;
 
