@@ -270,6 +270,70 @@
   }
   ```
 
+</br>
+
+---
+
+## [Java - Constructors](https://www.tutorialspoint.com/java/java_constructors.htm) <span id="content-4"></span>
+
+### Introduction
+- A constructor initializes an object when it is created.
+- However, constructors have no explicit return type.
+- Typically, you will use a constructor to give initial values to the instance variables defined by the class, or to perform any other start-up procedures required to create a fully formed object.
+- Basic syntax: </br>
+  ```java
+  class ClassName {
+     ClassName() {
+     }
+  }
+  ```
+- Java allows two types of constructors namely −
+  - No argument Constructors
+  - Parameterized Constructors
+
+### No argument Constructors
+- Example: </br>
+  ```java
+  public class MyClass {
+     Int num;
+     MyClass() {
+        num = 100;
+     }
+  }
+
+  public class ConsDemo {
+     public static void main(String args[]) {
+        MyClass t1 = new MyClass();
+        MyClass t2 = new MyClass();
+        System.out.println(t1.num + " " + t2.num);
+     }
+  }
+  ```
+
+### Parameterized Constructors
+- Example: </br>
+  ```java
+  // A simple constructor.
+  class MyClass {
+     int x;
+     
+     // Following is the constructor
+     MyClass(int i ) {
+        x = i;
+     }
+  }
+
+  public class ConsDemo {
+     public static void main(String args[]) {
+        MyClass t1 = new MyClass( 10 );
+        MyClass t2 = new MyClass( 20 );
+        System.out.println(t1.x + " " + t2.x);
+     }
+  }
+  ```
+
+:arrow_up: Back to top
+
 
 </br>
 
@@ -279,3 +343,4 @@
 - https://www.tutorialspoint.com/java/index.htm
 - https://www.tutorialspoint.com/java/java_basic_syntax.htm
 - https://www.tutorialspoint.com/java/java_object_classes.htm
+- https://www.tutorialspoint.com/java/java_constructors.htm
