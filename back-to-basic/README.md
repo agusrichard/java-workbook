@@ -86,6 +86,190 @@
   }
   ```
 
+</br>
+
+---
+
+## [Java - Object and Classes](https://www.tutorialspoint.com/java/java_object_classes.htm) <span id="content-3"></span>
+
+### Intro
+- Java supports the following OOP concepts:
+  - Polymorphism
+  - Inheritance
+  - Encapsulation
+  - Abstraction
+  - Classes
+  - Objects
+  - Instance
+  - Method
+  - Message Passing
+- Object − Objects have states and behaviors. Example: A dog has states - color, name, breed as well as behaviors – wagging the tail, barking, eating. An object is an instance of a class.
+- Class − A class can be defined as a template/blueprint that describes the behavior/state that the object of its type support.
+
+
+### Objects in Java
+- Software objects also have a state and a behavior.
+- A software object's state is stored in fields and behavior is shown via methods.
+- So in software development, methods operate on the internal state of an object and the object-to-object communication is done via methods.
+
+
+### Classes in Java
+- A class is a blueprint from which individual objects are created. Example: </br>
+  ```java
+  public class Dog {
+     String breed;
+     int age;
+     String color;
+
+     void barking() {
+     }
+
+     void hungry() {
+     }
+
+     void sleeping() {
+     }
+  }
+  ```
+- A class can contain any of the following variable types.
+  - Local variables − Variables defined inside methods, constructors or blocks are called local variables. The variable will be declared and initialized within the method and the variable will be destroyed when the method has completed.
+  - Instance variables − Instance variables are variables within a class but outside any method. These variables are initialized when the class is instantiated. Instance variables can be accessed from inside any method, constructor or blocks of that particular class.
+  - Class variables − Class variables are variables declared within a class, outside any method, with the static keyword.
+
+
+### Constructors
+- Every class has a constructor. If we do not explicitly write a constructor for a class, the Java compiler builds a default constructor for that class.
+- Each time a new object is created, at least one constructor will be invoked.
+- The main rule of constructors is that they should have the same name as the class.
+- A class can have more than one constructor.
+- Example: </br>
+  ```java
+  public class Puppy {
+    public Puppy() {
+    }
+
+    public Puppy(String name) {
+      // This constructor has one parameter, name.
+    }
+  }
+  ```
+- Java also supports Singleton Classes where you would be able to create only one instance of a class.
+
+### Creating an Object
+- There are three steps when creating an object from a class:
+  - Declaration − A variable declaration with a variable name with an object type.
+  - Instantiation − The 'new' keyword is used to create the object.
+  - Initialization − The 'new' keyword is followed by a call to a constructor. This call initializes the new object.
+- Example: </br>
+  ```java
+  public class Puppy {
+     public Puppy(String name) {
+        // This constructor has one parameter, name.
+        System.out.println("Passed Name is :" + name );
+     }
+
+     public static void main(String []args) {
+        // Following statement would create an object myPuppy
+        Puppy myPuppy = new Puppy( "tommy" );
+     }
+  }
+  ```
+
+### Accessing Instance Variables and Methods
+- Example: </br>
+  ```java
+  public class Puppy {
+     int puppyAge;
+
+     public Puppy(String name) {
+        // This constructor has one parameter, name.
+        System.out.println("Name chosen is :" + name );
+     }
+
+     public void setAge( int age ) {
+        puppyAge = age;
+     }
+
+     public int getAge( ) {
+        System.out.println("Puppy's age is :" + puppyAge );
+        return puppyAge;
+     }
+
+     public static void main(String []args) {
+        /* Object creation */
+        Puppy myPuppy = new Puppy( "tommy" );
+
+        /* Call class method to set puppy's age */
+        myPuppy.setAge( 2 );
+
+        /* Call another class method to get puppy's age */
+        myPuppy.getAge( );
+
+        /* You can access instance variable as follows as well */
+        System.out.println("Variable Value :" + myPuppy.puppyAge );
+     }
+  }
+  ```
+
+### Source File Declaration Rules
+- There can be only one public class per source file.
+- A source file can have multiple non-public classes.
+- The public class name should be the name of the source file as well which should be appended by .java at the end. For example: the class name is public class Employee{} then the source file should be as Employee.java.
+- If the class is defined inside a package, then the package statement should be the first statement in the source file.
+- If import statements are present, then they must be written between the package statement and the class declaration. If there are no package statements, then the import statement should be the first line in the source file.
+- Import and package statements will imply to all the classes present in the source file. It is not possible to declare different import and/or package statements to different classes in the source file.
+
+### Java Package
+- In simple words, it is a way of categorizing the classes and interfaces.
+
+### Import Statements
+- Import statement is a way of giving the proper location for the compiler to find that particular class.
+- For example, the following line would ask the compiler to load all the classes available in directory java_installation/java/io −</br>
+  ```shell
+  import java.io.*;
+  ```
+
+### A Simple Case Study
+- First example: </br>
+  ```java
+  import java.io.*;
+  public class Employee {
+
+     String name;
+     int age;
+     String designation;
+     double salary;
+
+     // This is the constructor of the class Employee
+     public Employee(String name) {
+        this.name = name;
+     }
+
+     // Assign the age of the Employee  to the variable age.
+     public void empAge(int empAge) {
+        age = empAge;
+     }
+
+     /* Assign the designation to the variable designation.*/
+     public void empDesignation(String empDesig) {
+        designation = empDesig;
+     }
+
+     /* Assign the salary to the variable	salary.*/
+     public void empSalary(double empSalary) {
+        salary = empSalary;
+     }
+
+     /* Print the Employee details */
+     public void printEmployee() {
+        System.out.println("Name:"+ name );
+        System.out.println("Age:" + age );
+        System.out.println("Designation:" + designation );
+        System.out.println("Salary:" + salary);
+     }
+  }
+  ```
+
 
 </br>
 
@@ -94,3 +278,4 @@
 ## References:
 - https://www.tutorialspoint.com/java/index.htm
 - https://www.tutorialspoint.com/java/java_basic_syntax.htm
+- https://www.tutorialspoint.com/java/java_object_classes.htm
