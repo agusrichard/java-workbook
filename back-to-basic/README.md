@@ -5,6 +5,7 @@
 ## List of Contents:
 ### 1. [Java Tutorial](#content-1)
 ### 2. [Java - Basic Syntax](#content-2)
+### 2. [Java - Basic Syntax](#content-2)
 
 
 
