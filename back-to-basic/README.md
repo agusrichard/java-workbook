@@ -5,9 +5,9 @@
 ## List of Contents:
 ### 1. [Java Tutorial](#content-1)
 ### 2. [Java - Basic Syntax](#content-2)
-### 2. [Java - Basic Syntax](#content-2)
-
-
+### 3. [Java - Object and Classes](#content-3)
+### 4. [Java - Constructors](#content-4)
+### 4. [Java - Basic Datatypes](#content-5)
 
 
 </br>
@@ -21,6 +21,7 @@
 - Java is a high-level programming language originally developed by Sun Microsystems and released in 1995.
 - Unlike many other programming languages including C and C++, when Java is compiled, it is not compiled into platform specific machine, rather into platform independent byte code. This byte code is distributed over the web and interpreted by the Virtual Machine (JVM) on whichever platform it is being run on.
 
+**[⬆ back to top](#list-of-contents)**
 
 </br>
 
@@ -86,6 +87,8 @@
     }
   }
   ```
+
+**[⬆ back to top](#list-of-contents)**
 
 </br>
 
@@ -271,6 +274,8 @@
   }
   ```
 
+**[⬆ back to top](#list-of-contents)**
+
 </br>
 
 ---
@@ -333,7 +338,55 @@
   }
   ```
 
-:arrow_up: Back to top
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
+
+## [Java - Basic Datatypes](https://www.tutorialspoint.com/java/java_basic_datatypes.htm) <span id="content-4"></span>
+
+### Intro:
+- Variables are nothing but reserved memory locations to store values. This means that when you create a variable you reserve some space in the memory.
+- There are two data types available in Java:
+  - Primitive Data Types
+  - References/Object Data Types
+
+
+### Primitive Data Types
+- Eight primitive data types:
+  - byte: 8 bit integer
+  - short: 16 bit integer
+  - int: 32 bit integer
+  - long: 64 bit integer
+  - float: 32 floating point
+  - double: 64 floating point
+  - boolean
+  - char: 16 bit unicode character
+
+### Reference Data Types
+- Reference variables are created using defined constructors of the classes. They are used to access objects. These variables are declared to be of a specific type that cannot be changed. For example, Employee, Puppy, etc.
+- Class objects and various type of array variables come under reference datatype.
+- Default value of any reference variable is null.
+- A reference variable can be used to refer any object of the declared type or any compatible type.
+- Example: Animal animal = new Animal("giraffe");
+
+
+### Java Literals
+- A literal is a source code representation of a fixed value. They are represented directly in the code without any computation.
+- Example: </br>
+  ```java
+  byte a = 68;
+  char a = 'A';
+
+  int decimal = 100;
+  int octal = 0144;
+  int hexa =  0x64;
+  char a = '\u0001';
+  String a = "\u0001";
+  ```
+
+
 
 
 </br>
@@ -345,3 +398,4 @@
 - https://www.tutorialspoint.com/java/java_basic_syntax.htm
 - https://www.tutorialspoint.com/java/java_object_classes.htm
 - https://www.tutorialspoint.com/java/java_constructors.htm
+- https://www.tutorialspoint.com/java/java_basic_datatypes.htm
