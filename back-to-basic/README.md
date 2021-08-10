@@ -12,6 +12,11 @@
 ### 7. [Java - Modifier Types](#content-7)
 ### 8. [Java - Basic Operators](#content-8)
 ### 9. [Java - Loop Control](#content-9)
+### 10. [Java - Decision Making](#content-10)
+### 11. [Java - Numbers Class](#content-11)
+### 12. [Java - Character Class](#content-12)
+### 13. [Java - Strings Class](#content-13)
+### 14. [Java - Arrays](#content-14)
 
 
 </br>
@@ -738,6 +743,283 @@
 
 ---
 
+## [Java - Decision Making](https://www.tutorialspoint.com/java/java_decision_making.htm) <span id="content-10"></span>
+
+### Introduction
+- Decision making diagram:
+  ![decision-making](https://www.tutorialspoint.com/java/images/decision_making.jpg)
+- 4 decision making statements:
+  - `if` statement
+  - `if... else` statement
+  - `nested if` statement
+  - `switch` statement
+
+### The ? : Operator
+- Conditional operator or ternary operator
+- Basic syntax:
+  ```java
+  Exp1 ? Exp2 : Exp3;
+  ```
+
+
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
+
+## [Java - Numbers Class](https://www.tutorialspoint.com/java/java_numbers.htm) <span id="content-11"></span>
+
+### Introduction
+- Wrapper class of numbers (wrapper for the primitive data types):
+  - Byte
+  - Double
+  - Float
+  - Integer
+  - Short
+  - Long
+- Converting primitive data types into object is called boxing, and this is taken care by the compiler.
+- The Wrapper object will be converted back to a primitive data type, and this process is called unboxing
+- Example:
+  ```java
+  public class Test {
+
+     public static void main(String args[]) {
+        Integer x = 5; // boxes int to an Integer object
+        x =  x + 10;   // unboxes the Integer to a int
+        System.out.println(x); 
+     }
+  }
+  ```
+
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
+
+## [Java - Character Class](https://www.tutorialspoint.com/java/java_characters.htm) <span id="content-12"></span>
+
+### Introduction
+- Example:
+  ```java
+  char ch = 'a';
+
+  // Unicode for uppercase Greek omega character
+  char uniChar = '\u039A'; 
+
+  // an array of chars
+  char[] charArray ={ 'a', 'b', 'c', 'd', 'e' }; 
+  ```
+- Syntax:
+  ```java
+  Character ch = new Character('a');
+  ```
+- Example:
+  ```java
+  // Here following primitive char 'a'
+  // is boxed into the Character object ch
+  Character ch = 'a';
+
+  // Here primitive 'x' is boxed for method test,
+  // return is unboxed to char 'c'
+  char c = test('x');
+  ```
+  ```java
+  public class Test {
+
+     public static void main(String args[]) {
+        System.out.println("She said \"Hello!\" to me.");
+     }
+  }
+  ````
+
+
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
+
+## [Java - Strings Class](https://www.tutorialspoint.com/java/java_strings.htm) <span id="content-13"></span>
+
+### Introduction
+- Strings, which are widely used in Java programming, are a sequence of characters.
+
+### Create Strings
+- Syntax:
+  ```java
+  String greeting = "Hello world!";
+  ```
+- Example:
+  ```java
+  public class StringDemo {
+
+     public static void main(String args[]) {
+        char[] helloArray = { 'h', 'e', 'l', 'l', 'o', '.' };
+        String helloString = new String(helloArray);  
+        System.out.println( helloString );
+     }
+  }
+  ```
+- The String class is immutable, so that once it is created a String object cannot be changed. If there is a necessity to make a lot of modifications to Strings of characters, then you should use String Buffer & String Builder.
+
+
+### String Length
+- Methods used to obtain information about an object are known as accessor methods. 
+- One accessor method that you can use with strings is the length() method, which returns the number of characters contained in the string object.
+- Example:
+  ```java
+  public class StringDemo {
+
+     public static void main(String args[]) {
+        String palindrome = "Dot saw I was Tod";
+        int len = palindrome.length();
+        System.out.println( "String Length is : " + len );
+     }
+  }
+  ```
+
+### Concatenating Strings
+- Several ways to concatenate strings
+  ```java
+  string1.concat(string2);
+
+  "My name is ".concat("Zara");
+
+  "Hello," + " world" + "!";
+  ```
+  ```java
+  public class StringDemo {
+
+     public static void main(String args[]) {
+        String string1 = "saw I was ";
+        System.out.println("Dot " + string1 + "Tod");
+     }
+  }
+  ```
+
+### Creating Format Strings
+- Example:
+  ```java
+  String fs;
+  fs = String.format("The value of the float variable is " +
+                     "%f, while the value of the integer " +
+                     "variable is %d, and the string " +
+                     "is %s", floatVar, intVar, stringVar);
+  System.out.println(fs);
+  ```
+
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
+
+## [Java - Arrays](https://www.tutorialspoint.com/java/java_arrays.htm) <span id="content-14"></span>
+
+### Declaring Array Variables
+- How we can declare an array:
+  ```java
+  dataType[] arrayRefVar;   // preferred way.
+  or
+  dataType arrayRefVar[];  // works but not preferred way.
+  ```
+  ```java
+  double[] myList;   // preferred way.
+  or
+  double myList[];   // works but not preferred way.
+  ```
+
+### Creating Arrays
+- Syntax:
+  ```java
+  dataType[] arrayRefVar = new dataType[arraySize];
+
+  dataType[] arrayRefVar = {value0, value1, ..., valuek};
+  ```
+- Example:
+  ```java
+  double[] myList = new double[10];
+  ```
+
+
+### Processing Arrays
+- Example:
+  ```java
+  public class TestArray {
+
+     public static void main(String[] args) {
+        double[] myList = {1.9, 2.9, 3.4, 3.5};
+
+        // Print all the array elements
+        for (int i = 0; i < myList.length; i++) {
+           System.out.println(myList[i] + " ");
+        }
+       
+        // Summing all elements
+        double total = 0;
+        for (int i = 0; i < myList.length; i++) {
+           total += myList[i];
+        }
+        System.out.println("Total is " + total);
+        
+        // Finding the largest element
+        double max = myList[0];
+        for (int i = 1; i < myList.length; i++) {
+           if (myList[i] > max) max = myList[i];
+        }
+        System.out.println("Max is " + max);  
+     }
+  }
+  ```
+
+### The foreach Loops
+- Example:
+  ```java
+  public class TestArray {
+
+     public static void main(String[] args) {
+        double[] myList = {1.9, 2.9, 3.4, 3.5};
+
+        // Print all the array elements
+        for (double element: myList) {
+           System.out.println(element);
+        }
+     }
+  }
+  ```
+
+
+### Passing Arrays to Methods
+- Example:
+  ```java
+  public static void printArray(int[] array) {
+     for (int i = 0; i < array.length; i++) {
+        System.out.print(array[i] + " ");
+     }
+  }
+  ```
+
+### Returning an Array from a Method
+- Example:
+  ```java
+  public static int[] reverse(int[] list) {
+     int[] result = new int[list.length];
+
+     for (int i = 0, j = result.length - 1; i < list.length; i++, j--) {
+        result[j] = list[i];
+     }
+     return result;
+  }
+  ```
+
+
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
 ## References:
 - https://www.tutorialspoint.com/java/index.htm
 - https://www.tutorialspoint.com/java/java_basic_syntax.htm
@@ -748,3 +1030,8 @@
 - https://www.tutorialspoint.com/java/java_modifier_types.htm
 - https://www.tutorialspoint.com/java/java_basic_operators.htm
 - https://www.tutorialspoint.com/java/java_loop_control.htm
+- https://www.tutorialspoint.com/java/java_decision_making.htm
+- https://www.tutorialspoint.com/java/java_numbers.htm
+- https://www.tutorialspoint.com/java/java_characters.htm
+- https://www.tutorialspoint.com/java/java_strings.htm
+- https://www.tutorialspoint.com/java/java_arrays.htm
