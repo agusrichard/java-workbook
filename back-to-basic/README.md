@@ -17,6 +17,9 @@
 ### 12. [Java - Character Class](#content-12)
 ### 13. [Java - Strings Class](#content-13)
 ### 14. [Java - Arrays](#content-14)
+### 15. [Java - Date and Time](#content-15)
+### 16. [Java - Regular Expressions](#content-16)
+### 17. [Java - Methods](#content-17)
 
 
 </br>
@@ -1020,6 +1023,596 @@
 </br>
 
 ---
+
+## [Java - Date and Time](https://www.tutorialspoint.com/java/java_date_time.htm) <span id="content-15"></span>
+
+
+### Introduction
+- `Date( ) `: This constructor initializes the object with the current date and time.
+- `Date(long millisec)` : This constructor accepts an argument that equals the number of milliseconds that have elapsed since midnight, January 1, 1970.
+
+
+### Getting Current Date and Time
+- Example:
+  ```java
+  import java.util.Date;
+  public class DateDemo {
+
+     public static void main(String args[]) {
+        // Instantiate a Date object
+        Date date = new Date();
+
+        // display time and date using toString()
+        System.out.println(date.toString());
+     }
+  }
+  ```
+
+
+### Date Comparison
+- You can use getTime( ) to obtain the number of milliseconds that have elapsed since midnight, January 1, 1970, for both objects and then compare these two values.
+- You can use the methods before( ), after( ), and equals( ). Because the 12th of the month comes before the 18th, for example, new Date(99, 2, 12).before(new Date (99, 2, 18)) returns true.
+- You can use the compareTo( ) method, which is defined by the Comparable interface and implemented by Date.
+
+### Date Formatting Using SimpleDateFormat
+- Example:
+  ```java
+  import java.util.*;
+  import java.text.*;
+
+  public class DateDemo {
+
+     public static void main(String args[]) {
+        Date dNow = new Date( );
+        SimpleDateFormat ft = 
+        new SimpleDateFormat ("E yyyy.MM.dd 'at' hh:mm:ss a zzz");
+
+        System.out.println("Current Date: " + ft.format(dNow));
+     }
+  }
+  ```
+
+
+### Date Formatting Using printf
+- Example:
+  ```java
+  import java.util.Date;
+  public class DateDemo {
+
+     public static void main(String args[]) {
+        // Instantiate a Date object
+        Date date = new Date();
+
+        // display time and date
+        String str = String.format("Current Date/Time : %tc", date );
+
+        System.out.printf(str);
+     }
+  }
+  ```
+  ```java
+  import java.util.Date;
+  public class DateDemo {
+
+     public static void main(String args[]) {
+        // Instantiate a Date object
+        Date date = new Date();
+    
+        // display time and date
+        System.out.printf("%1$s %2$tB %2$td, %2$tY", "Due date:", date);
+     }
+  }
+  ```
+  ```java
+  import java.util.Date;
+  public class DateDemo {
+
+     public static void main(String args[]) {
+        // Instantiate a Date object
+        Date date = new Date();
+    
+        // display formatted date
+        System.out.printf("%s %tB %<te, %<tY", "Due date:", date);
+     }
+  }
+  ```
+
+### Parsing Strings into Dates
+- Example:
+  ```java
+  import java.util.*;
+  import java.text.*;
+    
+  public class DateDemo {
+
+     public static void main(String args[]) {
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd"); 
+        String input = args.length == 0 ? "1818-11-11" : args[0]; 
+
+        System.out.print(input + " Parses as "); 
+        Date t;
+        try {
+           t = ft.parse(input); 
+           System.out.println(t); 
+        } catch (ParseException e) { 
+           System.out.println("Unparseable using " + ft); 
+        }
+     }
+  }
+  ```
+
+### Sleeping for a While
+- Example:
+  ```java
+  import java.util.*;
+  public class SleepDemo {
+
+    public static void main(String args[]) {
+      try { 
+         System.out.println(new Date( ) + "\n"); 
+         Thread.sleep(5*60*10); 
+         System.out.println(new Date( ) + "\n"); 
+      } catch (Exception e) {
+         System.out.println("Got an exception!"); 
+      }
+    }
+  }
+  ```
+
+### Measuring Elapsed Time
+- Example:
+  ```java
+  import java.util.*;
+  public class DiffDemo {
+
+     public static void main(String args[]) {
+        try {
+           long start = System.currentTimeMillis( );
+           System.out.println(new Date( ) + "\n");
+           
+           Thread.sleep(5*60*10);
+           System.out.println(new Date( ) + "\n");
+           
+           long end = System.currentTimeMillis( );
+           long diff = end - start;
+           System.out.println("Difference is : " + diff);
+        } catch (Exception e) {
+           System.out.println("Got an exception!");
+        }
+     }
+  }
+  ```
+
+
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
+
+## [Java - Regular Expressions](https://www.tutorialspoint.com/java/java_regular_expressions.htm) <span id="content-16"></span>
+
+> Note: I left out several important things to be read and written later on.
+
+### Introduction
+- Java provides the java.util.regex package for pattern matching with regular expressions.
+- A regular expression is a special sequence of characters that helps you match or find other strings or sets of strings, using a specialized syntax held in a pattern. They can be used to search, edit, or manipulate text and data.
+- The java.util.regex package primarily consists of the following three classes −
+  - Pattern Class − A Pattern object is a compiled representation of a regular expression.
+  - Matcher Class − A Matcher object is the engine that interprets the pattern and performs match operations against an input string.
+  - PatternSyntaxException − A PatternSyntaxException object is an unchecked exception that indicates a syntax error in a regular expression pattern.
+
+
+### Capturing Groups
+- Capturing groups are a way to treat multiple characters as a single unit. 
+- Example:
+  ```java
+  import java.util.regex.Matcher;
+  import java.util.regex.Pattern;
+
+  public class RegexMatches {
+
+     public static void main( String args[] ) {
+        // String to be scanned to find the pattern.
+        String line = "This order was placed for QT3000! OK?";
+        String pattern = "(.*)(\\d+)(.*)";
+
+        // Create a Pattern object
+        Pattern r = Pattern.compile(pattern);
+
+        // Now create matcher object.
+        Matcher m = r.matcher(line);
+        if (m.find( )) {
+           System.out.println("Found value: " + m.group(0) );
+           System.out.println("Found value: " + m.group(1) );
+           System.out.println("Found value: " + m.group(2) );
+        }else {
+           System.out.println("NO MATCH");
+        }
+     }
+  }
+  ```
+
+### Replacement Methods
+- Example:
+  ```java
+  import java.util.regex.Matcher;
+  import java.util.regex.Pattern;
+
+  public class RegexMatches {
+
+     private static final String REGEX = "\\bcat\\b";
+     private static final String INPUT = "cat cat cat cattie cat";
+
+     public static void main( String args[] ) {
+        Pattern p = Pattern.compile(REGEX);
+        Matcher m = p.matcher(INPUT);   // get a matcher object
+        int count = 0;
+
+        while(m.find()) {
+           count++;
+           System.out.println("Match number "+count);
+           System.out.println("start(): "+m.start());
+           System.out.println("end(): "+m.end());
+        }
+     }
+  }
+  ```
+  ```java
+  import java.util.regex.Matcher;
+  import java.util.regex.Pattern;
+
+  public class RegexMatches {
+
+     private static final String REGEX = "foo";
+     private static final String INPUT = "fooooooooooooooooo";
+     private static Pattern pattern;
+     private static Matcher matcher;
+
+     public static void main( String args[] ) {
+        pattern = Pattern.compile(REGEX);
+        matcher = pattern.matcher(INPUT);
+
+        System.out.println("Current REGEX is: "+REGEX);
+        System.out.println("Current INPUT is: "+INPUT);
+
+        System.out.println("lookingAt(): "+matcher.lookingAt());
+        System.out.println("matches(): "+matcher.matches());
+     }
+  }
+  ```
+  ```java
+  import java.util.regex.Matcher;
+  import java.util.regex.Pattern;
+
+  public class RegexMatches {
+
+     private static String REGEX = "dog";
+     private static String INPUT = "The dog says meow. " + "All dogs say meow.";
+     private static String REPLACE = "cat";
+
+     public static void main(String[] args) {
+        Pattern p = Pattern.compile(REGEX);
+        
+        // get a matcher object
+        Matcher m = p.matcher(INPUT); 
+        INPUT = m.replaceAll(REPLACE);
+        System.out.println(INPUT);
+     }
+  }
+  ```
+  ```java
+  import java.util.regex.Matcher;
+  import java.util.regex.Pattern;
+
+  public class RegexMatches {
+
+     private static String REGEX = "a*b";
+     private static String INPUT = "aabfooaabfooabfoob";
+     private static String REPLACE = "-";
+     public static void main(String[] args) {
+
+        Pattern p = Pattern.compile(REGEX);
+        
+        // get a matcher object
+        Matcher m = p.matcher(INPUT);
+        StringBuffer sb = new StringBuffer();
+        while(m.find()) {
+           m.appendReplacement(sb, REPLACE);
+        }
+        m.appendTail(sb);
+        System.out.println(sb.toString());
+     }
+  }
+  ```
+
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
+
+## [Java - Methods](https://www.tutorialspoint.com/java/java_methods.htm) <span id="content-17"></span>
+
+
+### Introduction
+- A Java method is a collection of statements that are grouped together to perform an operation.
+
+
+### Creating method
+- Basic example:
+  ```java
+  public static int methodName(int a, int b) {
+     // body
+  }
+  ```
+- Syntax:
+  ```java
+  modifier returnType nameOfMethod (Parameter List) {
+     // method body
+  }
+  ```
+- Example:
+  ```java
+  /** the snippet returns the minimum between two numbers */
+  public static int minFunction(int n1, int n2) {
+     int min;
+     if (n1 > n2)
+        min = n2;
+     else
+        min = n1;
+
+     return min; 
+  }
+  ```
+
+### Method Calling
+- For using a method, it should be called. There are two ways in which a method is called i.e., method returns a value or returning nothing (no return value).
+- Example:
+  ```java
+  public class ExampleMinNumber {
+   
+     public static void main(String[] args) {
+        int a = 11;
+        int b = 6;
+        int c = minFunction(a, b);
+        System.out.println("Minimum Value = " + c);
+     }
+
+     /** returns the minimum of two numbers */
+     public static int minFunction(int n1, int n2) {
+        int min;
+        if (n1 > n2)
+           min = n2;
+        else
+           min = n1;
+
+        return min; 
+     }
+  }
+  ```
+
+### The `void` Keyword
+- The void keyword allows us to create methods which do not return a value.
+- Example:
+  ```java
+  public class ExampleVoid {
+
+     public static void main(String[] args) {
+        methodRankPoints(255.7);
+     }
+
+     public static void methodRankPoints(double points) {
+        if (points >= 202.5) {
+           System.out.println("Rank:A1");
+        }else if (points >= 122.4) {
+           System.out.println("Rank:A2");
+        }else {
+           System.out.println("Rank:A3");
+        }
+     }
+  }
+  ```
+
+### Passing Parameters by Value
+- Parameters can be passed by value or by reference.
+- Example:
+  ```java
+  public class swappingExample {
+
+     public static void main(String[] args) {
+        int a = 30;
+        int b = 45;
+        System.out.println("Before swapping, a = " + a + " and b = " + b);
+
+        // Invoke the swap method
+        swapFunction(a, b);
+        System.out.println("\n**Now, Before and After swapping values will be same here**:");
+        System.out.println("After swapping, a = " + a + " and b is " + b);
+     }
+
+     public static void swapFunction(int a, int b) {
+        System.out.println("Before swapping(Inside), a = " + a + " b = " + b);
+        
+        // Swap n1 with n2
+        int c = a;
+        a = b;
+        b = c;
+        System.out.println("After swapping(Inside), a = " + a + " b = " + b);
+     }
+  }
+  ```
+
+
+### Method Overloading
+- When a class has two or more methods by the same name but different parameters, it is known as method overloading.
+- It is different from overriding. In overriding, a method has the same method name, type, number of parameters, etc.
+- Example:
+  ```java
+  public class ExampleOverloading {
+
+     public static void main(String[] args) {
+        int a = 11;
+        int b = 6;
+        double c = 7.3;
+        double d = 9.4;
+        int result1 = minFunction(a, b);
+        
+        // same function name with different parameters
+        double result2 = minFunction(c, d);
+        System.out.println("Minimum Value = " + result1);
+        System.out.println("Minimum Value = " + result2);
+     }
+
+     // for integer
+     public static int minFunction(int n1, int n2) {
+        int min;
+        if (n1 > n2)
+           min = n2;
+        else
+           min = n1;
+
+        return min; 
+     }
+     
+     // for double
+     public static double minFunction(double n1, double n2) {
+       double min;
+        if (n1 > n2)
+           min = n2;
+        else
+           min = n1;
+
+        return min; 
+     }
+  }
+  ```
+
+### Using Command-Line Arguments
+- Example:
+  ```java
+  public class CommandLine {
+
+     public static void main(String args[]) { 
+        for(int i = 0; i<args.length; i++) {
+           System.out.println("args[" + i + "]: " +  args[i]);
+        }
+     }
+  }
+  ```
+
+### The `this` keyword
+- `this` is a keyword in Java which is used as a reference to the object of the current class, with in an instance method or a constructor. Using this you can refer the members of a class such as constructors, variables and methods.
+- Diagram:
+  ![this keyword-diagram](https://www.tutorialspoint.com/java/images/this.jpg)
+- Example:
+  ```java
+  class Student {
+     int age;   
+     Student(int age) {
+        this.age = age;	
+     }
+  }
+  ```
+  ```java
+  class Student {
+     int age
+     Student() {
+        this(20);
+     }
+     
+     Student(int age) {
+        this.age = age;	
+     }
+  }
+  ```
+  ```java
+  public class This_Example {
+     // Instance variable num
+     int num = 10;
+  	
+     This_Example() {
+        System.out.println("This is an example program on keyword this");	
+     }
+
+     This_Example(int num) {
+        // Invoking the default constructor
+        this();
+        
+        // Assigning the local variable num to the instance variable num
+        this.num = num;	   
+     }
+     
+     public void greet() {
+        System.out.println("Hi Welcome to Tutorialspoint");
+     }
+        
+     public void print() {
+        // Local variable num
+        int num = 20;
+        
+        // Printing the local variable
+        System.out.println("value of local variable num is : "+num);
+        
+        // Printing the instance variable
+        System.out.println("value of instance variable num is : "+this.num);
+        
+        // Invoking the greet method of a class
+        this.greet();     
+     }
+     
+     public static void main(String[] args) {
+        // Instantiating the class
+        This_Example obj1 = new This_Example();
+        
+        // Invoking the print method
+        obj1.print();
+  	  
+        // Passing a new value to the num variable through parametrized constructor
+        This_Example obj2 = new This_Example(30);
+        
+        // Invoking the print method again
+        obj2.print(); 
+     }
+  }
+  ```
+
+### Variable Arguments(var-args)
+- Example:
+  ```java
+  public class VarargsDemo {
+
+     public static void main(String args[]) {
+        // Call method with variable args  
+  	   printMax(34, 3, 3, 2, 56.5);
+        printMax(new double[]{1, 2, 3});
+     }
+
+     public static void printMax( double... numbers) {
+        if (numbers.length == 0) {
+           System.out.println("No argument passed");
+           return;
+        }
+
+        double result = numbers[0];
+
+        for (int i = 1; i <  numbers.length; i++)
+        if (numbers[i] >  result)
+        result = numbers[i];
+        System.out.println("The max value is " + result);
+     }
+  }
+  ```
+
+### The finalize( ) Method
+- It is possible to define a method that will be called just before an object's final destruction by the garbage collector. This method is called finalize( ), and it can be used to ensure that an object terminates cleanly.
+
+
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
 ## References:
 - https://www.tutorialspoint.com/java/index.htm
 - https://www.tutorialspoint.com/java/java_basic_syntax.htm
@@ -1035,3 +1628,5 @@
 - https://www.tutorialspoint.com/java/java_characters.htm
 - https://www.tutorialspoint.com/java/java_strings.htm
 - https://www.tutorialspoint.com/java/java_arrays.htm
+- https://www.tutorialspoint.com/java/java_date_time.htm
+- https://www.tutorialspoint.com/java/java_regular_expressions.htm
