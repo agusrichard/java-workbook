@@ -9,6 +9,9 @@
 ### 4. [Java - Constructors](#content-4)
 ### 5. [Java - Basic Datatypes](#content-5)
 ### 6. [Java - Variable Types](#content-6)
+### 7. [Java - Modifier Types](#content-7)
+### 8. [Java - Basic Operators](#content-8)
+### 9. [Java - Loop Control](#content-9)
 
 
 </br>
@@ -523,9 +526,213 @@
   }
   ```
 
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
+
+## [Java - Modifier Types](https://www.tutorialspoint.com/java/java_modifier_types.htm) <span id="content-7"></span>
+
+
+### Introduction
+- Java language has a wide variety of modifiers
+  - Java Access Modifiers
+  - Non Access Modifiers
+- Example: </br>
+  ```java
+  public class className {
+     // ...
+  }
+
+  private boolean myFlag;
+  static final double weeks = 9.5;
+  protected static final int BOXWIDTH = 42;
+
+  public static void main(String[] arguments) {
+     // body of method
+  }
+  ```
+
+### Access Control Modifiers
+- Java provides a number of access modifiers to set access levels for classes, variables, methods and constructors. The four access levels are:
+  - Visible to the package, the default. No modifiers are needed.
+  - Visible to the class only (private).
+  - Visible to the world (public)
+  - Visible to the package and all subclasses (protected).
+
+
+### Non-Access Modifiers
+- The static modifier for creating class methods and variables.
+- The final modifier for finalizing the implementations of classes, methods, and variables.
+- The abstract modifier for creating abstract classes and methods.
+- The synchronized and volatile modifiers, which are used for threads.
 
 
 
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
+
+## [Java - Basic Operators](https://www.tutorialspoint.com/java/java_basic_operators.htm) <span id="content-8"></span>
+
+
+### Introduction
+- Java provides a rich set of operators to manipulate variables.
+  - Arithmetic Operators
+  - Relational Operators
+  - Bitwise Operators
+  - Logical Operators
+  - Assignment Operators
+  - Misc Operators
+
+### The Arithmetic Operators
+- Addition
+- Substraction
+- Multiplication
+- Division
+- Modulus
+- Increment
+- Decrement
+
+
+### The Relational Operators
+- == (equal to)
+- != (not equal to)
+- \> (greater than)
+- < (less than)
+- \>= (greater than or equal to)
+- <= (less than or equal to)
+
+### The Bitwise Operators
+- & (bitwise and)
+- | (bitwise or)
+- ^ (bitwise XOR)
+- ~ (bitwise compliment)
+- << (left shift)
+- \>> (right shift)
+- \>>> (zero fill right shift)>>> (zero fill right shift)
+
+### The Logical Operators
+- && (logical and)
+- || (logical or)
+- ! (logical not)
+
+### The Assignment Operators
+- I am pretty sure You've known this
+
+### Miscellaneous Operators
+- Conditional Operator ( ? : )
+  - Conditional operator is also known as the ternary operator. 
+  - Basic form: </br>
+    ```java
+    variable x = (expression) ? value if true : value if false
+    ```
+  - Example:
+    ```java
+    public class Test {
+
+      public static void main(String args[]) {
+        int a, b;
+        a = 10;
+        b = (a == 1) ? 20: 30;
+        System.out.println( "Value of b is : " +  b );
+
+        b = (a == 10) ? 20: 30;
+        System.out.println( "Value of b is : " + b );
+      }
+    }
+    ```
+- `instanceof` Operator
+  - This operator is used only for object reference variables. The operator checks whether the object is of a particular type (class type or interface type).
+  - Basic form"
+    ```java
+    ( Object reference variable ) instanceof  (class/interface type)
+    ```
+  - Example:
+    ```java
+    public class Test {
+
+      public static void main(String args[]) {
+
+        String name = "James";
+
+        // following will return true since name is type of String
+        boolean result = name instanceof String;
+        System.out.println( result );
+      }
+    }
+    ```
+    ```java
+    class Vehicle {}
+
+    public class Car extends Vehicle {
+
+      public static void main(String args[]) {
+
+        Vehicle a = new Car();
+        boolean result =  a instanceof Car;
+        System.out.println( result );
+      }
+    }
+    ```
+
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
+
+## [Java - Loop Control](https://www.tutorialspoint.com/java/java_loop_control.htm) <span id="content-1"></span>
+
+### Introduction
+- A loop statement allows us to execute a statement or group of statements multiple times and following is the general form of a loop statement in most of the programming languages </br>
+  ![Loop statement](https://www.tutorialspoint.com/java/images/loop_architecture.jpg)
+- There ways to write loop statement in Java:
+  - `while` loop
+  - `for` loop
+  - `do... while` loop
+
+### Loop Control Statements
+- Loop control statements change execution from its normal sequence.
+- Control statements:
+  - `break` statement
+  - `continue` statement
+
+
+### Enhanced for loop in Java
+- Syntax:
+  ```java
+  for(declaration : expression) {
+     // Statements
+  }
+  ```
+- Example:
+  ```java
+  public class Test {
+
+     public static void main(String args[]) {
+        int [] numbers = {10, 20, 30, 40, 50};
+
+        for(int x : numbers ) {
+           System.out.print( x );
+           System.out.print(",");
+        }
+        System.out.print("\n");
+        String [] names = {"James", "Larry", "Tom", "Lacy"};
+
+        for( String name : names ) {
+           System.out.print( name );
+           System.out.print(",");
+        }
+     }
+  }
+  ```
+
+
+**[⬆ back to top](#list-of-contents)**
 
 </br>
 
@@ -538,3 +745,6 @@
 - https://www.tutorialspoint.com/java/java_constructors.htm
 - https://www.tutorialspoint.com/java/java_basic_datatypes.htm
 - https://www.tutorialspoint.com/java/java_variable_types.htm
+- https://www.tutorialspoint.com/java/java_modifier_types.htm
+- https://www.tutorialspoint.com/java/java_basic_operators.htm
+- https://www.tutorialspoint.com/java/java_loop_control.htm
