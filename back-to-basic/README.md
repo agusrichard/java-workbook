@@ -22,6 +22,7 @@
 ### 17. [Java - Methods](#content-17)
 ### 18. [Java - Exceptions](#content-18)
 ### 19. [Java - Inner classes](#content-19)
+### 20. [Java - Inheritance](#content-20)
 
 
 </br>
@@ -2120,6 +2121,244 @@
 
 ---
 
+## [Java - Inheritance](https://www.tutorialspoint.com/java/java_inheritance.htm) <span id="content-20"></span>
+
+### Introduction
+- Inheritance can be defined as the process where one class acquires the properties (methods and fields) of another.
+- The class which inherits the properties of other is known as subclass (derived class, child class) and the class whose properties are inherited is known as superclass (base class, parent class).
+
+### `extends` Keyword
+- extends is the keyword used to inherit the properties of a class.
+- Syntax:
+  ```java
+  class Super {
+     .....
+     .....
+  }
+  class Sub extends Super {
+     .....
+     .....
+  }
+  ```
+- Example:
+  ```java
+  class Calculation {
+     int z;
+  	
+     public void addition(int x, int y) {
+        z = x + y;
+        System.out.println("The sum of the given numbers:"+z);
+     }
+  	
+     public void Subtraction(int x, int y) {
+        z = x - y;
+        System.out.println("The difference between the given numbers:"+z);
+     }
+  }
+
+  public class My_Calculation extends Calculation {
+     public void multiplication(int x, int y) {
+        z = x * y;
+        System.out.println("The product of the given numbers:"+z);
+     }
+  	
+     public static void main(String args[]) {
+        int a = 20, b = 10;
+        My_Calculation demo = new My_Calculation();
+        demo.addition(a, b);
+        demo.Subtraction(a, b);
+        demo.multiplication(a, b);
+     }
+  }
+  ```
+- In the given program, when an object to My_Calculation class is created, a copy of the contents of the superclass is made within it. That is why, using the object of the subclass you can access the members of a superclass.
+- A subclass inherits all the members (fields, methods, and nested classes) from its superclass. Constructors are not members, so they are not inherited by subclasses, but the constructor of the superclass can be invoked from the subclass.
+
+### The `super` keyword
+- The scenarios where the `super` keyword is used:
+  - It is used to differentiate the members of superclass from the members of subclass, if they have same names.
+  - It is used to invoke the superclass constructor from subclass.
+- To access variables and methods with the same name on parent class in child class, we can use `super.variable` or `super.method()`
+- Example:
+  ```java
+  class Super_class {
+     int num = 20;
+
+     // display method of superclass
+     public void display() {
+        System.out.println("This is the display method of superclass");
+     }
+  }
+
+  public class Sub_class extends Super_class {
+     int num = 10;
+
+     // display method of sub class
+     public void display() {
+        System.out.println("This is the display method of subclass");
+     }
+
+     public void my_method() {
+        // Instantiating subclass
+        Sub_class sub = new Sub_class();
+
+        // Invoking the display() method of sub class
+        sub.display();
+
+        // Invoking the display() method of superclass
+        super.display();
+
+        // printing the value of variable num of subclass
+        System.out.println("value of the variable named num in sub class:"+ sub.num);
+
+        // printing the value of variable num of superclass
+        System.out.println("value of the variable named num in super class:"+ super.num);
+     }
+
+     public static void main(String args[]) {
+        Sub_class obj = new Sub_class();
+        obj.my_method();
+     }
+  }
+  ```
+
+### Invoking Superclass Constructor
+- If a class is inheriting the properties of another class, the subclass automatically acquires the default constructor of the superclass. But if you want to call a parameterized constructor of the superclass, you need to use the super keyword as shown below. </br>
+  ```java
+  super(values)
+  ```
+- Example:
+  ```java
+  class Superclass {
+     int age;
+
+     Superclass(int age) {
+        this.age = age; 		 
+     }
+
+     public void getAge() {
+        System.out.println("The value of the variable named age in super class is: " +age);
+     }
+  }
+
+  public class Subclass extends Superclass {
+     Subclass(int age) {
+        super(age);
+     }
+
+     public static void main(String args[]) {
+        Subclass s = new Subclass(24);
+        s.getAge();
+     }
+  }
+  ```
+
+### IS-A Relationship
+- IS-A is a way of saying: This object is a type of that object.
+- Example:
+  ```java
+  public class Animal {
+  }
+
+  public class Mammal extends Animal {
+  }
+
+  public class Reptile extends Animal {
+  }
+
+  public class Dog extends Mammal {
+  }
+  ```
+- Explanation:
+  - Animal is the superclass of Mammal class.
+  - Animal is the superclass of Reptile class.
+  - Mammal and Reptile are subclasses of Animal class.
+  - Dog is the subclass of both Mammal and Animal classes.
+- With the use of the extends keyword, the subclasses will be able to inherit all the properties of the superclass except for the private properties of the superclass.
+- Example:
+  ```java
+  class Animal {
+  }
+
+  class Mammal extends Animal {
+  }
+
+  class Reptile extends Animal {
+  }
+
+  public class Dog extends Mammal {
+
+     public static void main(String args[]) {
+        Animal a = new Animal();
+        Mammal m = new Mammal();
+        Dog d = new Dog();
+
+        System.out.println(m instanceof Animal);
+        System.out.println(d instanceof Mammal);
+        System.out.println(d instanceof Animal);
+     }
+  }
+  ```
+- Example usage of `implements` keyword:
+  ```java
+  public interface Animal {
+  }
+
+  public class Mammal implements Animal {
+  }
+
+  public class Dog extends Mammal {
+  }
+  ```
+
+### The `instanceof` keyword
+- Example:
+  ```java
+  interface Animal{}
+  class Mammal implements Animal{}
+
+  public class Dog extends Mammal {
+
+     public static void main(String args[]) {
+        Mammal m = new Mammal();
+        Dog d = new Dog();
+
+        System.out.println(m instanceof Animal);
+        System.out.println(d instanceof Mammal);
+        System.out.println(d instanceof Animal);
+     }
+  }
+  ```
+
+### HAS-A relationship
+- Example:
+  ```java
+  public class Vehicle{}
+  public class Speed{}
+
+  public class Van extends Vehicle {
+     private Speed sp;
+  } 
+  ```
+- Explanation:
+  - This shows that class Van HAS-A Speed. By having a separate class for Speed, we do not have to put the entire code that belongs to speed inside the Van class, which makes it possible to reuse the Speed class in multiple applications.
+  - In Object-Oriented feature, the users do not need to bother about which object is doing the real work. To achieve this, the Van class hides the implementation details from the users of the Van class.
+
+### Types of Inheritance
+- Diagram:
+  ![inherintance-diagram](https://www.tutorialspoint.com/java/images/types_of_inheritance.jpg)
+- A very important fact to remember is that Java does not support multiple inheritance. This means that a class cannot extend more than one class. Therefore following is illegal − </br>
+  ```java
+  public class extends Animal, Mammal{} 
+  ```
+
+
+
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
 ## References:
 - https://www.tutorialspoint.com/java/index.htm
 - https://www.tutorialspoint.com/java/java_basic_syntax.htm
@@ -2139,3 +2378,4 @@
 - https://www.tutorialspoint.com/java/java_regular_expressions.htm
 - https://www.tutorialspoint.com/java/java_exceptions.htm
 - https://www.tutorialspoint.com/java/java_innerclasses.htm
+- https://www.tutorialspoint.com/java/java_inheritance.htm
