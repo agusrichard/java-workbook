@@ -23,6 +23,7 @@
 ### 18. [Java - Exceptions](#content-18)
 ### 19. [Java - Inner classes](#content-19)
 ### 20. [Java - Inheritance](#content-20)
+### 21. [Java - Overriding](#content-21)
 
 
 </br>
@@ -2353,6 +2354,116 @@
   ```
 
 
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
+
+## [Java - Overriding](https://www.tutorialspoint.com/java/java_overriding.htm) <span id="content-21"></span>
+
+### Introduction
+- The benefit of overriding is: ability to define a behavior that's specific to the subclass type, which means a subclass can implement a parent class method based on its requirement.
+- In object-oriented terms, overriding means to override the functionality of an existing method.
+- Example:
+  ```java
+  class Animal {
+     public void move() {
+        System.out.println("Animals can move");
+     }
+  }
+
+  class Dog extends Animal {
+     public void move() {
+        System.out.println("Dogs can walk and run");
+     }
+  }
+
+  public class TestDog {
+
+     public static void main(String args[]) {
+        Animal a = new Animal();   // Animal reference and object
+        Animal b = new Dog();   // Animal reference but Dog object
+
+        a.move();   // runs the method in Animal class
+        b.move();   // runs the method in Dog class
+     }
+  }
+  ```
+- In compile time, the check is made on the reference type. However, in the runtime, JVM figures out the object type and would run the method that belongs to that particular object.
+
+### Failing Case
+- Example:
+  ```java
+  class Animal {
+     public void move() {
+        System.out.println("Animals can move");
+     }
+  }
+
+  class Dog extends Animal {
+     public void move() {
+        System.out.println("Dogs can walk and run");
+     }
+     public void bark() {
+        System.out.println("Dogs can bark");
+     }
+  }
+
+  public class TestDog {
+
+     public static void main(String args[]) {
+        Animal a = new Animal();   // Animal reference and object
+        Animal b = new Dog();   // Animal reference but Dog object
+
+        a.move();   // runs the method in Animal class
+        b.move();   // runs the method in Dog class
+        b.bark();
+     }
+  }
+  ```
+- This program will throw a compile time error since b's reference type Animal doesn't have a method by the name of bark.
+
+### Rules for Method Overriding
+- The argument list should be exactly the same as that of the overridden method.
+- The return type should be the same or a subtype of the return type declared in the original overridden method in the superclass.
+- The access level cannot be more restrictive than the overridden method's access level. For example: If the superclass method is declared public then the overridding method in the sub class cannot be either private or protected.
+- Instance methods can be overridden only if they are inherited by the subclass.
+- A method declared final cannot be overridden.
+- A method declared static cannot be overridden but can be re-declared.
+- If a method cannot be inherited, then it cannot be overridden.
+- A subclass within the same package as the instance's superclass can override any superclass method that is not declared private or final.
+- A subclass in a different package can only override the non-final methods declared public or protected.
+- An overriding method can throw any uncheck exceptions, regardless of whether the overridden method throws exceptions or not. However, the overriding method should not throw checked exceptions that are new or broader than the ones declared by the overridden method. The overriding method can throw narrower or fewer exceptions than the overridden method.
+- Constructors cannot be overridden.
+
+
+### Using the super Keyword
+- Example:
+  ```java
+  class Animal {
+     public void move() {
+        System.out.println("Animals can move");
+     }
+  }
+
+  class Dog extends Animal {
+     public void move() {
+        super.move();   // invokes the super class method
+        System.out.println("Dogs can walk and run");
+     }
+  }
+
+  public class TestDog {
+
+     public static void main(String args[]) {
+        Animal b = new Dog();   // Animal reference but Dog object
+        b.move();   // runs the method in Dog class
+     }
+  }
+
+  ```
+
 
 **[⬆ back to top](#list-of-contents)**
 
@@ -2379,3 +2490,4 @@
 - https://www.tutorialspoint.com/java/java_exceptions.htm
 - https://www.tutorialspoint.com/java/java_innerclasses.htm
 - https://www.tutorialspoint.com/java/java_inheritance.htm
+- https://www.tutorialspoint.com/java/java_overriding.htm
