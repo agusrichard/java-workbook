@@ -24,6 +24,7 @@
 ### 19. [Java - Inner classes](#content-19)
 ### 20. [Java - Inheritance](#content-20)
 ### 21. [Java - Overriding](#content-21)
+### 22. [Java - Polymorphism](#content-22)
 
 
 </br>
@@ -2470,6 +2471,137 @@
 </br>
 
 ---
+
+## [Java - Polymorphism](https://www.tutorialspoint.com/java/java_polymorphism.htm) <span id="content-22"></span>
+
+
+### Introduction
+- Polymorphism is the ability of an object to take on many forms.
+- Any Java object that can pass more than one IS-A test is considered to be polymorphic. In Java, all Java objects are polymorphic since any object will pass the IS-A test for their own type and for the class Object.
+- A reference variable can be of only one type. Once declared, the type of a reference variable cannot be changed.
+- The type of the reference variable would determine the methods that it can invoke on the object.
+- A reference variable can refer to any object of its declared type or any subtype of its declared type. A reference variable can be declared as a class or interface type.
+- Example:
+  ```java
+  public interface Vegetarian{}
+  public class Animal{}
+  public class Deer extends Animal implements Vegetarian{}
+  ```
+- Explanation:
+  - A Deer IS-A Animal
+  - A Deer IS-A Vegetarian
+  - A Deer IS-A Deer
+  - A Deer IS-A Object
+- The following declarations are legal:
+  ```java
+  Deer d = new Deer();
+  Animal a = d;
+  Vegetarian v = d;
+  Object o = d;
+  ```
+
+### Virtual Methods
+- Example:
+  ```java
+  /* File name : Employee.java */
+  public class Employee {
+     private String name;
+     private String address;
+     private int number;
+
+     public Employee(String name, String address, int number) {
+        System.out.println("Constructing an Employee");
+        this.name = name;
+        this.address = address;
+        this.number = number;
+     }
+
+     public void mailCheck() {
+        System.out.println("Mailing a check to " + this.name + " " + this.address);
+     }
+
+     public String toString() {
+        return name + " " + address + " " + number;
+     }
+
+     public String getName() {
+        return name;
+     }
+
+     public String getAddress() {
+        return address;
+     }
+
+     public void setAddress(String newAddress) {
+        address = newAddress;
+     }
+
+     public int getNumber() {
+        return number;
+     }
+  }
+  ```
+  ```java
+  /* File name : Salary.java */
+  public class Salary extends Employee {
+     private double salary; // Annual salary
+     
+     public Salary(String name, String address, int number, double salary) {
+        super(name, address, number);
+        setSalary(salary);
+     }
+     
+     public void mailCheck() {
+        System.out.println("Within mailCheck of Salary class ");
+        System.out.println("Mailing check to " + getName()
+        + " with salary " + salary);
+     }
+     
+     public double getSalary() {
+        return salary;
+     }
+     
+     public void setSalary(double newSalary) {
+        if(newSalary >= 0.0) {
+           salary = newSalary;
+        }
+     }
+     
+     public double computePay() {
+        System.out.println("Computing salary pay for " + getName());
+        return salary/52;
+     }
+  }
+  ```
+  ```java
+  /* File name : VirtualDemo.java */
+  public class VirtualDemo {
+
+     public static void main(String [] args) {
+        Salary s = new Salary("Mohd Mohtashim", "Ambehta, UP", 3, 3600.00);
+        Employee e = new Salary("John Adams", "Boston, MA", 2, 2400.00);
+        System.out.println("Call mailCheck using Salary reference --");   
+        s.mailCheck();
+        System.out.println("\n Call mailCheck using Employee reference--");
+        e.mailCheck();
+     }
+  }
+  ```
+- Explanation:
+  - Here, we instantiate two Salary objects. One using a Salary reference s, and the other using an Employee reference e.
+  - While invoking s.mailCheck(), the compiler sees mailCheck() in the Salary class at compile time, and the JVM invokes mailCheck() in the Salary class at run time.
+  - mailCheck() on e is quite different because e is an Employee reference. When the compiler sees e.mailCheck(), the compiler sees the mailCheck() method in the Employee class.
+  - Here, at compile time, the compiler used mailCheck() in Employee to validate this statement. At run time, however, the JVM invokes mailCheck() in the Salary class.
+  - This behavior is referred to as virtual method invocation, and these methods are referred to as virtual methods. An overridden method is invoked at run time, no matter what data type the reference is that was used in the source code at compile time.
+
+
+
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
+
 ## References:
 - https://www.tutorialspoint.com/java/index.htm
 - https://www.tutorialspoint.com/java/java_basic_syntax.htm
@@ -2491,3 +2623,4 @@
 - https://www.tutorialspoint.com/java/java_innerclasses.htm
 - https://www.tutorialspoint.com/java/java_inheritance.htm
 - https://www.tutorialspoint.com/java/java_overriding.htm
+- https://www.tutorialspoint.com/java/java_polymorphism.htm
