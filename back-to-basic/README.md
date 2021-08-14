@@ -27,6 +27,8 @@
 ### 22. [Java - Polymorphism](#content-22)
 ### 23. [Java - Abstraction](#content-23)
 ### 24. [Java - Encapsulation](#content-24)
+### 25. [Java - Interfaces](#content-25)
+### 26. [Java - Packages](#content-26)
 
 
 </br>
@@ -2821,6 +2823,259 @@
 </br>
 
 ---
+
+## [Java - Interfaces](https://www.tutorialspoint.com/java/java_interfaces.htm) <span id="content-25"></span>
+
+### Introduction
+- An interface is a reference type in Java. It is similar to class. It is a collection of abstract methods. A class implements an interface, thereby inheriting the abstract methods of the interface.
+- Along with abstract methods, an interface may also contain constants, default methods, static methods, and nested types. Method bodies exist only for default methods and static methods.
+- Writing an interface is similar to writing a class. But a class describes the attributes and behaviors of an object. And an interface contains behaviors that a class implements.
+- Unless the class that implements the interface is abstract, all the methods of the interface need to be defined in the class.
+- An interface is similar to a class in the following ways:
+  - An interface can contain any number of methods.
+  - An interface is written in a file with a .java extension, with the name of the interface matching the name of the file.
+  - The byte code of an interface appears in a .class file.
+  - Interfaces appear in packages, and their corresponding bytecode file must be in a directory structure that matches the package name.
+- However, an interface is different from a class in several ways, including:
+  - You cannot instantiate an interface.
+  - An interface does not contain any constructors.
+  - All of the methods in an interface are abstract.
+  - An interface cannot contain instance fields. The only fields that can appear in an interface must be declared both static and final.
+  - An interface is not extended by a class; it is implemented by a class.
+  - An interface can extend multiple interfaces.
+
+### Declaring Interfaces
+- Example:
+  ```java
+  /* File name : NameOfInterface.java */
+  import java.lang.*;
+  // Any number of import statements
+
+  public interface NameOfInterface {
+     // Any number of final, static fields
+     // Any number of abstract method declarations\
+  }
+  ``
+- Interfaces have the following properties:
+  - An interface is implicitly abstract. You do not need to use the abstract keyword while declaring an interface.
+  - Each method in an interface is also implicitly abstract, so the abstract keyword is not needed.
+  - Methods in an interface are implicitly public.
+- Example:
+  ```java
+  /* File name : Animal.java */
+  interface Animal {
+     public void eat();
+     public void travel();
+  }
+  ```
+
+### Implementing Interfaces
+- When a class implements an interface, you can think of the class as signing a contract, agreeing to perform the specific behaviors of the interface. If a class does not perform all the behaviors of the interface, the class must declare itself as abstract.
+- Example:
+  ```java
+  /* File name : MammalInt.java */
+  public class MammalInt implements Animal {
+
+     public void eat() {
+        System.out.println("Mammal eats");
+     }
+
+     public void travel() {
+        System.out.println("Mammal travels");
+     } 
+
+     public int noOfLegs() {
+        return 0;
+     }
+
+     public static void main(String args[]) {
+        MammalInt m = new MammalInt();
+        m.eat();
+        m.travel();
+     }
+  } 
+  ```
+- When overriding methods defined in interfaces, there are several rules to be followed:
+  - When overriding methods defined in interfaces, there are several rules to be followed
+  - Checked exceptions should not be declared on implementation methods other than the ones declared by the interface method or subclasses of those declared by the interface method.
+  - The signature of the interface method and the same return type or subtype should be maintained when overriding the methods.
+  - An implementation class itself can be abstract and if so, interface methods need not be implemented.
+- When implementation interfaces, there are several rules:
+  - A class can implement more than one interface at a time.
+  - A class can extend only one class, but implement many interfaces.
+  - An interface can extend another interface, in a similar way as a class can extend another class.
+
+
+### Extending Interfaces
+- An interface can extend another interface in the same way that a class can extend another class. The extends keyword is used to extend an interface, and the child interface inherits the methods of the parent interface.
+- Example:
+  ```java
+  // Filename: Sports.java
+  public interface Sports {
+     public void setHomeTeam(String name);
+     public void setVisitingTeam(String name);
+  }
+
+  // Filename: Football.java
+  public interface Football extends Sports {
+     public void homeTeamScored(int points);
+     public void visitingTeamScored(int points);
+     public void endOfQuarter(int quarter);
+  }
+
+  // Filename: Hockey.java
+  public interface Hockey extends Sports {
+     public void homeGoalScored();
+     public void visitingGoalScored();
+     public void endOfPeriod(int period);
+     public void overtimePeriod(int ot);
+  }
+  ```
+- The Hockey interface has four methods, but it inherits two from Sports; thus, a class that implements Hockey needs to implement all six methods.
+
+### Extending Multiple Interfaces
+- A Java class can only extend one parent class. Multiple inheritance is not allowed.
+- An interface can extend more than one parent interface.
+- Example:
+  ```java
+  public interface Hockey extends Sports, Event
+  ```
+
+### Tagging Interfaces
+- An interface with no methods in it is referred to as a tagging interface.
+- Example:
+  ```java
+  package java.util;
+  public interface EventListener
+  {}
+  ```
+- There are two basic design purposes of tagging interfaces:
+  - Creates a common parent: As with the EventListener interface, which is extended by dozens of other interfaces in the Java API, you can use a tagging interface to create a common parent among a group of interfaces. For example, when an interface extends EventListener, the JVM knows that this particular interface is going to be used in an event delegation scenario.
+  - Adds a data type to a class: This situation is where the term, tagging comes from. A class that implements a tagging interface does not need to define any methods (since the interface does not have any), but the class becomes an interface type through polymorphism.
+
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
+
+## [Java - Packages](https://www.tutorialspoint.com/java/java_packages.htm) <span id="content-26"></span>
+
+### Introduction
+- A Package can be defined as a grouping of related types (classes, interfaces, enumerations and annotations ) providing access protection and namespace management.
+- Programmers can define their own packages to bundle group of classes/interfaces, etc.
+
+### Creating a Package
+- There can be only one package statement in each source file, and it applies to all types in the file.
+- To compile the Java programs with package statements, you have to use -d option as shown below.
+  ```shell
+  javac -d Destination_folder file_name.java
+  ```
+- Example:
+  ```java
+  /* File name : Animal.java */
+  package animals;
+
+  interface Animal {
+     public void eat();
+     public void travel();
+  }
+  ```
+  ```java
+  package animals;
+  /* File name : MammalInt.java */
+
+  public class MammalInt implements Animal {
+
+     public void eat() {
+        System.out.println("Mammal eats");
+     }
+
+     public void travel() {
+        System.out.println("Mammal travels");
+     } 
+
+     public int noOfLegs() {
+        return 0;
+     }
+
+     public static void main(String args[]) {
+        MammalInt m = new MammalInt();
+        m.eat();
+        m.travel();
+     }
+  } 
+  ```
+- How to compile the above code:
+  ```shell
+  $ javac -d . Animal.java 
+  $ javac -d . MammalInt.java
+  ```
+
+
+### The `import` Keyword
+- If a class wants to use another class in the same package, the package name need not be used.
+- Classes in the same package find each other without any special syntax.
+- Example:
+  ```java
+  package payroll;
+  public class Boss {
+     public void payEmployee(Employee e) {
+        e.mailCheck();
+     }
+  }
+  ```
+- What happens if the Employee class is not in the payroll package? The Boss class must then use one of the following techniques for referring to a class in a different package:
+  - The fully qualified name of the class can be used. For example:
+    ```java
+    payroll.Employee
+    ```
+  - The package can be imported using the import keyword and the wild card (*). For example:
+    ```java
+    import payroll.*;
+    ```
+  - The class itself can be imported using the import keyword. For example:
+    ```java
+    import payroll.Employee;
+    ```
+
+### The Directory Structure of Packages
+- Two major results occur when a class is placed in a package:
+  - The name of the package becomes a part of the name of the class, as we just discussed in the previous section.
+  - The name of the package must match the directory structure where the corresponding bytecode resides.
+- Put the source code for a class, interface, enumeration, or annotation type in a text file whose name is the simple name of the type and whose extension is .java.
+- Example:
+  ```java
+  // File Name :  Car.java
+  package vehicle;
+
+  public class Car {
+     // Class implementation.   
+  }
+
+  // The source file is in ./vehicle/Car.java
+  ```
+- Example − A company's Internet domain name is apple.com, then all its package names would start with com.apple. Each component of the package name corresponds to a subdirectory. `....\com\apple\computers\Dell.java`
+- Example:
+  ```java
+  // File Name: Dell.java
+  package com.apple.computers;
+
+  public class Dell {
+  }
+
+  class Ups {
+  }
+
+  ```
+
+
+
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
 ## References:
 - https://www.tutorialspoint.com/java/index.htm
 - https://www.tutorialspoint.com/java/java_basic_syntax.htm
@@ -2845,3 +3100,5 @@
 - https://www.tutorialspoint.com/java/java_polymorphism.htm
 - https://www.tutorialspoint.com/java/java_abstraction.htm
 - https://www.tutorialspoint.com/java/java_encapsulation.htm
+- https://www.tutorialspoint.com/java/java_interfaces.htm
+- https://www.tutorialspoint.com/java/java_packages.htm
