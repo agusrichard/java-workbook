@@ -29,6 +29,7 @@
 ### 24. [Java - Encapsulation](#content-24)
 ### 25. [Java - Interfaces](#content-25)
 ### 26. [Java - Packages](#content-26)
+### 27. [Java - Generics](#content-27)
 
 
 </br>
@@ -3076,6 +3077,119 @@
 </br>
 
 ---
+
+
+## [Java - Generics](https://www.tutorialspoint.com/java/java_generics.htm) <span id="content-27"></span>
+
+### Introduction
+- Java Generic methods and generic classes enable programmers to specify, with a single method declaration, a set of related methods, or with a single class declaration, a set of related types, respectively.
+- Generics also provide compile-time type safety that allows programmers to catch invalid types at compile time.
+
+
+### Generic Methods
+- Following are the rules to define Generic Methods:
+  - All generic method declarations have a type parameter section delimited by angle brackets (< and >) that precedes the method's return type ( < E > in the next example).
+  - Each type parameter section contains one or more type parameters separated by commas. A type parameter, also known as a type variable, is an identifier that specifies a generic type name.
+  - The type parameters can be used to declare the return type and act as placeholders for the types of the arguments passed to the generic method, which are known as actual type arguments.
+  - A generic method's body is declared like that of any other method. Note that type parameters can represent only reference types, not primitive types (like int, double and char).
+- Example:
+  ```java
+  public class GenericMethodTest {
+     // generic method printArray
+     public static < E > void printArray( E[] inputArray ) {
+        // Display array elements
+        for(E element : inputArray) {
+           System.out.printf("%s ", element);
+        }
+        System.out.println();
+     }
+
+     public static void main(String args[]) {
+        // Create arrays of Integer, Double and Character
+        Integer[] intArray = { 1, 2, 3, 4, 5 };
+        Double[] doubleArray = { 1.1, 2.2, 3.3, 4.4 };
+        Character[] charArray = { 'H', 'E', 'L', 'L', 'O' };
+
+        System.out.println("Array integerArray contains:");
+        printArray(intArray);   // pass an Integer array
+
+        System.out.println("\nArray doubleArray contains:");
+        printArray(doubleArray);   // pass a Double array
+
+        System.out.println("\nArray characterArray contains:");
+        printArray(charArray);   // pass a Character array
+     }
+  }
+  ```
+
+### Bounded Type Parameters
+- To declare a bounded type parameter, list the type parameter's name, followed by the extends keyword, followed by its upper bound.
+- Example:
+  ```java
+  public class MaximumTest {
+     // determines the largest of three Comparable objects
+     
+     public static <T extends Comparable<T>> T maximum(T x, T y, T z) {
+        T max = x;   // assume x is initially the largest
+        
+        if(y.compareTo(max) > 0) {
+           max = y;   // y is the largest so far
+        }
+        
+        if(z.compareTo(max) > 0) {
+           max = z;   // z is the largest now                 
+        }
+        return max;   // returns the largest object   
+     }
+     
+     public static void main(String args[]) {
+        System.out.printf("Max of %d, %d and %d is %d\n\n", 
+           3, 4, 5, maximum( 3, 4, 5 ));
+
+        System.out.printf("Max of %.1f,%.1f and %.1f is %.1f\n\n",
+           6.6, 8.8, 7.7, maximum( 6.6, 8.8, 7.7 ));
+
+        System.out.printf("Max of %s, %s and %s is %s\n","pear",
+           "apple", "orange", maximum("pear", "apple", "orange"));
+     }
+  }
+  ```
+
+### Generic Classes
+- A generic class declaration looks like a non-generic class declaration, except that the class name is followed by a type parameter section.
+- As with generic methods, the type parameter section of a generic class can have one or more type parameters separated by commas. These classes are known as parameterized classes or parameterized types because they accept one or more parameters.
+- Example:
+  ```java
+  public class Box<T> {
+     private T t;
+
+     public void add(T t) {
+        this.t = t;
+     }
+
+     public T get() {
+        return t;
+     }
+
+     public static void main(String[] args) {
+        Box<Integer> integerBox = new Box<Integer>();
+        Box<String> stringBox = new Box<String>();
+      
+        integerBox.add(new Integer(10));
+        stringBox.add(new String("Hello World"));
+
+        System.out.printf("Integer Value :%d\n\n", integerBox.get());
+        System.out.printf("String Value :%s\n", stringBox.get());
+     }
+  }
+  ```
+
+
+**[⬆ back to top](#list-of-contents)**
+
+</br>
+
+---
 ## References:
 - https://www.tutorialspoint.com/java/index.htm
 - https://www.tutorialspoint.com/java/java_basic_syntax.htm
@@ -3102,3 +3216,4 @@
 - https://www.tutorialspoint.com/java/java_encapsulation.htm
 - https://www.tutorialspoint.com/java/java_interfaces.htm
 - https://www.tutorialspoint.com/java/java_packages.htm
+- https://www.tutorialspoint.com/java/java_generics.htm
