@@ -30,6 +30,8 @@
 ### 25. [Java - Interfaces](#content-25)
 ### 26. [Java - Packages](#content-26)
 ### 27. [Java - Generics](#content-27)
+### 28. [Java - Data Structures](#content-28)
+### 29. [Java - Collections](#content-29)
 
 
 </br>
