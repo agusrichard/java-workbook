@@ -1,5 +1,6 @@
 package com.example.demo.student;
 
+import com.sun.xml.bind.annotation.XmlIsSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,5 +25,15 @@ public class StudentController {
     @PostMapping
     public void registerNewStudent(@RequestBody Student student) {
         studentService.addNewStudent(student);
+    }
+
+    @DeleteMapping("{studentId}")
+    public void deleteStudent(@PathVariable("studentId") Long id) {
+        studentService.deleteStudent(id);
+    }
+
+    @PutMapping("{studentId}")
+    public void updateStudent(@PathVariable("studentId") Long id, @RequestBody Student student) {
+        studentService.updateStudent(id, student);
     }
 }
