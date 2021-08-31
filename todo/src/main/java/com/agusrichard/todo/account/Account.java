@@ -1,41 +1,49 @@
-package com.agusrichard.todo.user;
+package com.agusrichard.todo.account;
 
 import com.agusrichard.todo.todo.Todo;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "account")
+public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
+
+    @Column(unique = true)
     private String email;
     private String fullname;
-    private int age;
 
-    @OneToMany(targetEntity = Todo.class)
+    @Column(nullable = true)
+    private LocalDate dob;
+
+    @OneToMany(mappedBy = "account")
     private List<Todo> todoList;
 
-    public User(int id, String email, String fullname, int age) {
+    public Account(Long id, String email, String fullname, LocalDate dob) {
         this.id = id;
         this.email = email;
         this.fullname = fullname;
-        this.age = age;
+        this.dob = dob;
     }
 
-    public User(String email, String fullname, int age) {
+    public Account(String email, String fullname, LocalDate dob) {
         this.email = email;
         this.fullname = fullname;
-        this.age = age;
+        this.dob = dob;
     }
 
-    public int getId() {
+    public Account() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -55,12 +63,12 @@ public class User {
         this.fullname = fullname;
     }
 
-    public int getAge() {
-        return age;
+    public LocalDate getDob() {
+        return dob;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
     }
 
     public List<Todo> getTodoList() {
@@ -73,11 +81,11 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Account{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", fullname='" + fullname + '\'' +
-                ", age=" + age +
+                ", dob=" + dob +
                 '}';
     }
 }

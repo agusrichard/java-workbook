@@ -1,6 +1,6 @@
 package com.agusrichard.todo.todo;
 
-import com.agusrichard.todo.user.User;
+import com.agusrichard.todo.account.Account;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
@@ -10,43 +10,50 @@ import java.time.OffsetDateTime;
 public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
-    @Column(length = 128)
+    @Column(
+            nullable = false,
+            columnDefinition = "VARCHAR(128)"
+    )
     private String title;
 
-    @Column(columnDefinition = "text")
+    @Column(
+            nullable = true,
+            columnDefinition = "TEXT"
+    )
     private String description;
 
     @Column(
-            name = "time_of_execution",
-            columnDefinition = "TIMESTAMP WITH TIME ZONE",
-            nullable = true
+            nullable = true,
+            columnDefinition = "TIMESTAMP WITH TIME ZONE"
     )
     private OffsetDateTime timeOfExecution;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name="account_id")
+    private Account account;
 
-    public Todo(int id, String title, String description, OffsetDateTime timeOfExecution) {
+    public Todo(Long id, String title, String description, OffsetDateTime timeOfExecution, Account account) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.timeOfExecution = timeOfExecution;
+        this.account = account;
     }
 
-    public Todo(String title, String description, OffsetDateTime timeOfExecution) {
+    public Todo(String title, String description, OffsetDateTime timeOfExecution, Account account) {
         this.title = title;
         this.description = description;
         this.timeOfExecution = timeOfExecution;
+        this.account = account;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -74,12 +81,12 @@ public class Todo {
         this.timeOfExecution = timeOfExecution;
     }
 
-    public User getUser() {
-        return user;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override
@@ -89,6 +96,7 @@ public class Todo {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", timeOfExecution=" + timeOfExecution +
+                ", account=" + account +
                 '}';
     }
 }
