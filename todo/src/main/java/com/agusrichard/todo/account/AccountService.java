@@ -47,6 +47,15 @@ public class AccountService {
         return account.get();
     }
 
+    public Account getAccountByEmail(String email) {
+        Optional<Account> account = accountRepository.findAccountByEmail(email);
+        if (!account.isPresent()) {
+            throw new IllegalStateException("No account with email " + email + " is exist");
+        }
+
+        return account.get();
+    }
+
     @Transactional
     public void updateAccount(Account account) {
         Account willBeUpdatedAccount = accountRepository.findById(account.getId()).orElseThrow(

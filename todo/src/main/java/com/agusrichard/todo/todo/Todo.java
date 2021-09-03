@@ -1,6 +1,7 @@
 package com.agusrichard.todo.todo;
 
 import com.agusrichard.todo.account.Account;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
@@ -32,7 +33,15 @@ public class Todo {
 
     @ManyToOne
     @JoinColumn(name="account_id")
+    @JsonIgnore
     private Account account;
+
+    public Todo(String title, String description, OffsetDateTime timeOfExecution, Account account) {
+        this.title = title;
+        this.description = description;
+        this.timeOfExecution = timeOfExecution;
+        this.account = account;
+    }
 
     public Todo(Long id, String title, String description, OffsetDateTime timeOfExecution, Account account) {
         this.id = id;
@@ -42,11 +51,7 @@ public class Todo {
         this.account = account;
     }
 
-    public Todo(String title, String description, OffsetDateTime timeOfExecution, Account account) {
-        this.title = title;
-        this.description = description;
-        this.timeOfExecution = timeOfExecution;
-        this.account = account;
+    public Todo() {
     }
 
     public Long getId() {
@@ -88,6 +93,7 @@ public class Todo {
     public void setAccount(Account account) {
         this.account = account;
     }
+
 
     @Override
     public String toString() {

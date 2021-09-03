@@ -36,9 +36,14 @@ public class AccountController {
         return accountService.getAllAccounts();
     }
 
-    @GetMapping("{accountId}")
+    @GetMapping("get-by-id/{accountId}")
     public Account getAccountById(@PathVariable Long accountId) {
         return accountService.getAccountById(accountId);
+    }
+
+    @GetMapping("get-by-email/{email}")
+    public Account getAccountByEmail(@PathVariable String email) {
+        return accountService.getAccountByEmail(email);
     }
 
     @PutMapping
