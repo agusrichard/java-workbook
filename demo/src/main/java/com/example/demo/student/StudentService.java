@@ -45,10 +45,6 @@ public class StudentService {
                 () -> new IllegalStateException("No student with id " + studentId + " exists")
         );
 
-        System.out.println("update student");
-        System.out.println(student.getName());
-        System.out.println(willBeUpdatedStudent.getName());
-
         if (student.getName() != null && student.getName().length() > 0 && !Objects.equals(student.getName(), willBeUpdatedStudent.getName())) {
             System.out.println("Want to change the name");
             willBeUpdatedStudent.setName(student.getName());
