@@ -5,7 +5,7 @@
 ## List of Contents:
 ### 1. [Inheritance and abstraction](#content-1)
 ### 2. [Interfaces](#content-2)
-
+### 3. [Nested classes](#content-3)
 
 
 <br />
@@ -272,6 +272,184 @@
   interfaceName.constantName
   ```
 
+### Using interfaces
+- An interface defines a new reference data type. That means that you can refer to an interface anywhere you would refer to a class, such as when you cast, as illustrated by the following code snippet from a main() method you can add to Adult:
+  ```java
+  public static void main(String[] args) {
+      ...
+      Adult anAdult = new Adult();
+      anAdult.talk();
+      Human aHuman = (Human) anAdult;
+      aHuman.talk();
+  }
+  ```
+- Both calls to talk() will display Spoke. on the console. Why? Because an Adult is a Human once it implements that interface.
+- You can cast an Adult as a Human, then call methods defined by the interface, just as you can cast anAdult to Person and call Person methods on it.
+-  Consider this code somewhere in our system:
+  ```java
+  public static void main(String[] args) {
+      ...
+      Human aHuman = getHuman();
+      aHuman.move();
+  }
+  ```
+- Is the Human an Adult or a Baby? We don’t have to care. As long as whatever we get back from getPerson() is of type Human, we can call move() on it and expect it to respond accordingly. We don’t even have to care if the classes implementing the interface are in the same hierarchy.
+
+### Why interfaces?
+- There are three primary reasons for using interfaces:
+  - To create convenient or descriptive namespaces.
+  - To relate classes in different hierarchies.
+  - To hide underlying type details from your code.
+- When you create an interface to collect related constants, that interface gives you a descriptive name to use to refer to those constants.
+- The Java language supports single inheritance only. In other words, a class can only be a subclass of a single superclass.
+- In essence, an interface simply specifies a set of behaviors that all implementors of the interface must support.
+- Example:
+  ```java
+  public interface Mover {
+      void move();
+  }
+  ```
+
+**[⬆ back to top](#list-of-contents)**
+
+<br />
+
+---
+
+## [Nested classes](https://developer.ibm.com/tutorials/j-intermed/) <span id="content-3"></span>
+
+### What’s a nested class?
+- As its name suggests, a nested class in the Java language is a class declared within another class. Here’s a simple example:
+- Typically, good programmers define nested classes when the nested class only makes sense within the context of the enclosing class. Some common examples include the following:
+  - Event handlers within a UI class
+  - Helper classes for UI components within those components
+  - Adapter classes to convert the innards of one class to some other form for users of the class
+- You can define a nested class as public, private, or protected. You also can define a nested class as final (to prevent it from being changed), abstract (meaning that it can’t be instantiated), or static.
+- When you create a static class within another class, you’re creating what is appropriately called a nested class. A nested class is defined within another class, but can exist outside an instance of the enclosing class.
+- If your nested class isn’t static, it can exist only within an instance of the enclosing class, and is more appropriately called an inner class
+- In other words, all inner classes are nested classes, but not all nested classes are inner classes.
+- The vast majority of the nested classes you will encounter in your career will be inner classes, rather than simply nested ones.
+- Any nested class has access to all of the members of the enclosing class, even if they’re declared private.
+
+### Defining nested classes
+- You define a nested class just as you define a non-nested class, but you do it within an enclosing class. For a somewhat contrived example, let’s define a Wallet class inside Adult. While in real life you could have a Wallet apart from an Adult, it wouldn’t be all that useful, and it makes good sense that every Adult has a Wallet (or at least something to hold money, and MoneyContainer sounds a little odd).
+- Example:
+  ```java
+  protected class Wallet {
+      protected ArrayList bills = new ArrayList();
+  
+      protected void addBill(int aBill) {
+          bills.add(new Integer(aBill));
+      }
+  
+      protected int getMoneyTotal() {
+          int total = 0;
+          for (Iterator i = bills.iterator(); i.hasNext(); ) {
+              Integer wrappedBill = (Integer) i.next();
+              int bill = wrappedBill.intValue();
+              total += bill;
+          }
+          return total;
+      }
+  }
+  ```
+  ```java
+  public class Adult extends Person {
+      protected Wallet wallet = new Wallet();
+      public Adult() {
+      }
+      public void talk() {
+          System.out.println("Spoke.");
+      }
+      public void acceptMoney(int aBill) {
+          this.wallet.addBill(aBill);
+      }
+      public int moneyTotal() {
+          return this.wallet.getMoneyTotal();
+      }
+      protected class Wallet {
+          ...
+      }
+  }
+  ```
+  ```java
+  Adult anAdult = new Adult();
+  anAdult.acceptMoney(5);
+  System.out.println("I have this much money: " + anAdult.moneyTotal());
+  ```
+
+### Simplistic event handling
+- The Java language defines an event handling approach, with associated classes, that allows you to create and handle your own events. But event handling can be much simpler than that. All you really need is some logic to generate an “event” (which really doesn’t have to be an event class at all), and some logic to listen for that event and then respond appropriately.
+- For example, suppose that whenever a Person moves, our system generates (or fires) a MoveEvent, which we can choose to handle or not. This will require several changes to our system. We have to:
+  - Create an “application” class to launch our system and illustrate using the anonymous inner class.
+  - Create a MotionListener that our application can implement, and then handle the event in the listener.
+  - Add a List of listeners to Adult.
+  - Add an addMotionListener() method to Adult to register a listener.
+  - Add a fireMoveEvent() method to Adult so that it can tell listeners when to handle the event.
+  - Add code to our application to create an Adult and register itself as a handler.
+- Example:
+  ```java
+  public class Adult extends Person {
+      protected Wallet wallet = new Wallet();
+      protected ArrayList listeners = new ArrayList();
+      public Adult() {
+      }
+      public void move() {
+        super.move(); fireMoveEvent();
+      }
+      ...
+      public void addMotionListener(MotionListener aListener) {
+        listeners.add(aListener);
+      }
+      protected void fireMoveEvent() {
+        Iterator iterator = listeners.iterator();
+        while(iterator.hasNext()) {
+          MotionListener listener = (MotionListener) iterator.next();
+          listener.handleMove(this);
+      }
+      }
+      protected class Wallet {
+          ...
+      }
+  }
+  ```
+  ```java
+  public interface MotionListener {
+      public void handleMove(Adult eventSource);
+  }
+  ```
+  ```java
+  public class CommunityApplication implements MotionListener {
+    public void handleMove(Adult eventSource) {
+      System.out.println("This Adult moved: \n" + eventSource.toString());
+    }
+    public static void main(String[] args) {
+      CommunityApplication application = new CommunityApplication();
+      Adult anAdult = new Adult();
+      anAdult.addMotionListener(application);
+      anAdult.move();
+    }
+  }
+  ```
+
+### Anonymous inner classes
+- Anonymous inner classes allow you to define a class in place, without naming it, to provide some context-specific behavior.
+- Turn the previous code as anonymous inner class:
+  ```java
+  anAdult.addMotionListener(new MotionListener() {
+    public void handleMove(Adult eventSource) {
+      System.out.println("This Adult moved: \n" + eventSource.toString());
+    }
+  });
+  ```
+- Rather than having CommunityApplication implement MotionListener, we declared an unnamed (and thus anonymous) inner class of type MotionListener, and gave it an implementation of handleMove(). The fact that MotionListener is an interface, not a class, doesn’t matter. Either is acceptable.
+
+### Using nested classes
+- Use a nested class when it would make little sense to define the class outside of an enclosing class. In our example, we could have defined Wallet outside Adult without feeling too badly about it.
+- But imagine something like a Personality class. Do you ever have one outside a Person instance? No, so it makes perfect sense to define it as a nested class.
+- A good rule of thumb is that you should define a class as non-nested until it’s obvious that it should be nested, then refactor to nest it.
+- Anonymous inner classes are the standard approach for event handlers, so use them for that purpose. In other cases, be very careful with them.
+- Unless anonymous inner classes are small, focused, and familiar, they obfuscate code.
 
 
 
@@ -280,5 +458,6 @@
 <br />
 
 ---
+
 ## References:
 - https://developer.ibm.com/tutorials/j-intermed/

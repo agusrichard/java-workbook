@@ -1,11 +1,9 @@
 package person;
 
-public class Person {
+public abstract class Person {
     protected String name;
     protected String email;
     protected int age;
 
-    public Person() {
 
-    }
 }
