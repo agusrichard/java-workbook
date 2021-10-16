@@ -6,6 +6,7 @@
 ### 1. [Inheritance and abstraction](#content-1)
 ### 2. [Interfaces](#content-2)
 ### 3. [Nested classes](#content-3)
+### 4. [Collections](#content-4)
 
 
 <br />
@@ -450,6 +451,200 @@
 - A good rule of thumb is that you should define a class as non-nested until it’s obvious that it should be nested, then refactor to nest it.
 - Anonymous inner classes are the standard approach for event handlers, so use them for that purpose. In other cases, be very careful with them.
 - Unless anonymous inner classes are small, focused, and familiar, they obfuscate code.
+
+
+**[⬆ back to top](#list-of-contents)**
+
+<br />
+
+---
+
+## [Collections](https://developer.ibm.com/tutorials/j-intermed/) <span id="content-4"></span>
+
+### Collection interfaces and classes
+- The List interface defines a navigable collection of Object elements. e.g ArrayList, Vector
+- The Set interface defines a collection with no duplicate elements. e.g 	HashSet, TreeSet
+- The Map interface defines a collection of key-value pairs. e.g HashMap
+- All of the interfaces in the framework except Map are subinterfaces of the Collection interface, which defines the most general structure of a collection.
+- Each collection consists of elements. As implementors of subinterfaces of Collection, all collections share some (intuitive) behavior:
+  - Methods that describe the size of the collection (such as size() and isEmpty())
+  - Methods that describe the contents of the collection (such as contains() and containsAll())
+  - Methods that support manipulation of the collection’s contents (such as add(), remove(), and clear())
+  - Methods that let you convert a collection to an array (such as toArray())
+  - A method that lets you get an iterator on the array (iterator())
+
+### List implementations
+- Older versions of the JDK contained a class called Vector. It’s still there in newer versions, but you should use it only when you need a synchronized collection — that is, one that is thread-safe.
+- When we created a Wallet nested class in this tutorial, we incorporated an ArrayList to hold an Adult‘s bills:
+  ```java
+  protected class Wallet {
+      protected ArrayList bills = new ArrayList();
+  
+      protected void addBill(int aBill) {
+          bills.add(new Integer(aBill));
+      }
+  
+      protected int getMoneyTotal() {
+          int total = 0;
+          for (Iterator i = bills.iterator(); i.hasNext(); ) {
+              Integer wrappedBill = (Integer) i.next();
+              int bill = wrappedBill.intValue();
+              total += bill;
+          }
+          return total;
+      }
+  }
+  ```
+- The getMoneyTotal() method uses an iterator to march through the list of bills and total their values.
+- When you get an iterator on a collection (by calling iterator()), that iterator lets you traverse the collection using a couple of important methods, illustrated in the code above:
+  - hasNext() tells you if there is another element in the collection. 
+  - next() gives you that next element.
+- As we discussed before, you must cast to the correct type when you extract elements from a collection using next().
+- An Iterator gives us some additional capability, however. We can remove elements from our ArrayList by calling remove() (or removeAll(), or clear()), but we also can use the Iterator to do that.
+- Let’s add a simplistic method to Adult called spendMoney():
+  ```java
+  public void spendMoney(int aBill) {
+      this.wallet.removeBill(aBill);
+  }
+  ```
+  ```java
+  protected void removeBill(int aBill) {
+      Iterator iterator = bills.iterator();
+      while (iterator.hasNext()) {
+          Integer bill = (Integer) iterator.next();
+          if (bill.intValue() == aBill)
+              iterator.remove();
+      }
+  }
+  ```
+- Easier to read of the same implementation:
+  ```java
+  protected void removeBill(int aBill) {
+      bills.remove(new Integer(aBill));
+  }
+  ```
+- Remove multiple bills at once:
+  ```java
+  public void spendMoney(List bills) {
+      this.wallet.removeBills(bills);
+  }
+  ```
+  ```java
+  protected void removeBills(List billsToRemove) {
+      this.bills.removeAll(bills);
+  }
+  ```
+  ```java
+  protected void removeBills(List billsToRemove) {
+      Iterator iterator = billsToRemove.iterator();
+      while (iterator.hasNext()) {
+          this.bills.remove(iterator.next());
+      }
+  }
+  ```
+
+### Set implementations
+- HashSet, which does not guarantee the order of iteration.
+- TreeSet, which does.
+- The Java language documentation suggests that you’ll end up using the first implementation most of the time.
+- In general, if you need to make sure the elements in your Set are in a certain order when you traverse it with an iterator, use the second implementation.
+- Otherwise, the first will do. The ordering of elements in a TreeSet (which, by the way, implements the SortedSet interface) is called the natural ordering; this means that, most of the time, you should be able to order the elements based on an equals() comparison.
+- Suppose that each Adult has a set of nicknames. We really don’t care what order they’re in, but duplicates wouldn’t make much sense. We could use a HashSet to hold them. First, we add an instance variable:
+  ```java
+  protected Set nicknames = new HashSet();
+  ```
+- Add method:
+  ```java
+  public void addNickname(String aNickname) {
+      nicknames.add(aNickname);
+  }
+  ```
+- Now try running this code:
+  ```java
+  Adult anAdult = new Adult();
+  anAdult.addNickname("Bobby");
+  anAdult.addNickname("Bob");
+  anAdult.addNickname("Bobby");
+  System.out.println(anAdult.nicknames);
+  ```
+
+### Map implementations
+- A Map is a collection of key-value pairs. It cannot contain duplicate keys. Each key must map to a single value, but that value can be of any type.
+- You can think of a map as a named List. Imagine a List where each element has a name you can use to extract that element directly.
+- The key can be anything of type Object, as can the value. Once again, that means you can’t store primitives directly in a Map (do you hate primitives yet?). Instead, you have to use the primitive wrapper classes to store the values.
+- Although this is a financially risky strategy, we’re going to give each Adult a set of admittedly simplistic credit cards. Each will have a name and a balance (initially 0). First, we add an instance variable:
+  ```java
+  protected Map creditCards = new HashMap();
+  ```
+- Then we add a method to add a credit card to the Map:
+  ```java
+  public void addCreditCard(String aCardName) {
+      creditCards.put(aCardName, new Double(0));
+  }
+  ```
+- Retrieve the balance of the card:
+  ```java
+  public double getBalanceFor(String cardName) {
+      Double balance = (Double) creditCards.get(cardName);
+      return balance.doubleValue();
+  }
+  ```
+- Charging the balance:
+  ```java
+  public void charge(String cardName, double amount) {
+      Double balance = (Double) creditCards.get(cardName);
+      double primitiveBalance = balance.doubleValue();
+      primitiveBalance += amount;
+      balance = new Double(primitiveBalance);
+  
+      creditCards.put(cardName, balance);
+  }
+  ```
+
+### The Collections class
+- Frequently used method in Java:
+  - copy
+  - sort
+- The first method lets you copy the contents of one collection to another, like this:
+  ```java
+  List source = new ArrayList();
+  source.add("one");
+  source.add("two");
+  List target = new ArrayList();
+  target.add("three");
+  target.add("four");
+  
+  Collections.copy(target, source);
+  System.out.println(target);
+  ```
+- This code copies source into target. The target has to be the same size as the source, so you can’t copy a List into an empty List.
+- Then we override compareTo() to compare two Adult instances. We’ll keep the comparison simplistic for our example, so it’s less work:
+  ```java
+  public int compareTo(Object other) {
+      final int LESS_THAN = -1;
+      final int EQUAL = 0;
+      final int GREATER_THAN = 1;
+  
+      Adult otherAdult = (Adult) other;
+      if ( this == otherAdult ) return EQUAL;
+  
+      int comparison = this.firstname.compareTo(otherAdult.firstname);
+      if (comparison != EQUAL) return comparison;
+  
+      comparison = this.lastname.compareTo(otherAdult.lastname);
+      if (comparison != EQUAL) return comparison;
+  
+      return EQUAL;
+  }
+  ```
+  
+### Using collections
+- Despite what many professionals may believe, there are very few hard and fast rules about which classes to use in any given situation. In my personal experience, in the vast majority of the times I’ve used collections, an ArrayList or a HashMap (remember, a Map isn’t a true collection) did the trick. That will probably be the same in your experience. Here are some rules of thumb, some more obvious than others:
+  - When you think you need a collection, start with a List, then let the code tell you if you need another type.
+  - If you need a unique grouping of things, use a Set.
+  - If the iteration order is important when traversing a collection, use the Tree... flavors of collections, where available.
+  - Avoid using Vector, unless you need its synchronization capability.
+  - Don’t worry about optimization until (and unless) performance becomes an issue.
 
 
 
