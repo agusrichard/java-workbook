@@ -646,6 +646,102 @@
   - Avoid using Vector, unless you need its synchronization capability.
   - Don’t worry about optimization until (and unless) performance becomes an issue.
 
+**[⬆ back to top](#list-of-contents)**
+
+<br />
+
+---
+
+## I/O
+
+### Files
+- Here’s how you instantiate a File:
+  ```java
+  File aFile = new File("temp.txt");
+  ```
+- Note that having this File object doesn’t mean that the underlying file actually exists on the filesystem in the expected location.
+- Our object merely represents an actual file that may or may not be there. If the underlying file doesn’t exist, we won’t know there’s a problem until we try to read from or write to it.
+- To check if a file exists:
+  ```java
+  aFile.exists();
+  ```
+- If it does not exist we can create it:
+  ```java
+  aFile.createNewFile();
+  ```
+
+### Streams
+- We can access files on the filesystem using streams. At the lowest level, streams allow a program to receive bytes from a source and/or to send output to a destination.
+- Some streams handle all kinds of 16-bit characters (types Reader and Writer). Others handle only 8-bit bytes (types InputStream and OutputStream)
+- Byte streams read (InputStream and subclasses) and write (OutputStream and subclasses) 8-bit bytes. In other words, byte streams could be considered a more raw type of stream.
+- Character streams read (Reader and its subclasses) and write (Writer and its subclasses) 16-bit characters.
+
+### Reading and writing files
+- There are several ways to read from and write to a File. Arguably the simplest approach goes like this:
+  - Create a FileOutputStream on the File to write to it.
+  - Create a FileInputStream on the File to read from it.
+  - Call read() to read from the File and write() to write to it.
+  - Close the streams, cleaning up if necessary.
+- Example:
+  ```java
+  try {
+      File source = new File("input.txt");
+      File sink = new File("output.txt");
+
+      FileInputStream in = new FileInputStream(source);
+      FileOutputStream out = new FileOutputStream(sink);
+      int c;
+
+      while ((c = in.read()) != -1)
+        out.write(c);
+
+      in.close();
+      out.close();
+  } catch (Exception e) {
+      e.printStackTrace();
+  }
+  ```
+- Here we create two File objects: a FileInputStream to read from the source file, and a FileOutputStream to write to the output File. (Note: This example was adapted from the Java.sun.com CopyBytes.java example; see Resources.) We then read in each byte of the input and write it to the output.
+- Once done, we close the streams. It may seem wise to put the calls to close() in a finally block. However, the Java language compiler will still require that you catch the various exceptions that occur, which means yet another catch in your finally. Is it worth it? Maybe.
+  
+### Buffering streams
+- There are several ways to read from and write to a File, but the typical, and most convenient, approach goes like this:
+  - Create a FileWriter on the File.
+  - Wrap the FileWriter in a BufferedWriter.
+  - Call write() on the BufferedWriter as often as necessary to write the contents of the File, typically ending each line with a line termination character (that is, \n).
+  - Call flush() on the BufferedWriter to empty it.
+- Example:
+  ```java
+  try {
+      FileWriter writer = new FileWriter(aFile);
+      BufferedWriter buffered = new BufferedWriter(writer);
+      buffered.write("A line of text.\n");
+      buffered.flush();
+  } catch (IOException e1) {
+      e1.printStackTrace();
+  }
+  ```
+Close the BufferedWriter, cleaning up if necessary.
+- Here we create a FileWriter on aFile, then we wrap it in a BufferedWriter.
+- Buffered writing is more efficient than simply writing bytes out one at a time. When we’re done writing each line (which we manually terminate with \n), we call flush() on the BufferedWriter. If we didn’t, we wouldn’t see any data in the file, which defeats the purpose of all of this file writing effort.
+- Example:
+  ```java
+  String line = null;
+  StringBuffer lines = new StringBuffer();
+  try {
+      FileReader reader = new FileReader(aFile);
+      BufferedReader bufferedReader = new BufferedReader(reader);
+      while ( (line = bufferedReader.readLine()) != null) {
+          lines.append(line);
+          lines.append("\n");
+      }
+  } catch (IOException e1) {
+      e1.printStackTrace();
+  }
+  System.out.println(lines.toString());
+  ```
+- We create a FileReader, then wrap it in a BufferedReader. That allows us to use the convenient readLine() method. We read each line until there are none left, appending each line to the end of our StringBuffer. When reading from a file, an IOException could occur, so we surround all of our file-reading logic with a try / catch block.
+
 
 
 **[⬆ back to top](#list-of-contents)**
