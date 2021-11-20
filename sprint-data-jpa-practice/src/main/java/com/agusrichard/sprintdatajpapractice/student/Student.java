@@ -1,17 +1,43 @@
 package com.agusrichard.sprintdatajpapractice.student;
 
+import com.agusrichard.sprintdatajpapractice.course.Course;
+
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
+@Entity
+@Table(name = "students")
 public class Student {
-     private Long id;
-     private String email;
-     private String password;
-     private String fullname;
-     private LocalDate birthDate;
 
-     public Student() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-     }
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column()
+    private String fullname;
+
+    @Column()
+    private LocalDate birthDate;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="course_student",
+    joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"))
+    private List<Course> courses;
+
+    public Student(String email, String password, String fullname, LocalDate birthDate) {
+        this.email = email;
+        this.password = password;
+        this.fullname = fullname;
+        this.birthDate = birthDate;
+    }
 
     public Student(Long id, String email, String password, String fullname, LocalDate birthDate) {
         this.id = id;
