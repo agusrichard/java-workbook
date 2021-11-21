@@ -26,6 +26,21 @@ public class Course {
     @ManyToMany(mappedBy = "courses")
     private List<Student> students;
 
+    public Course(Long id, String name, String description, Date createdDate, List<Student> students) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.createdDate = createdDate;
+        this.students = students;
+    }
+
+    public Course(String name, String description, Date createdDate, List<Student> students) {
+        this.name = name;
+        this.description = description;
+        this.createdDate = createdDate;
+        this.students = students;
+    }
+
     public Course(String name, String description, Date createdDate) {
         this.name = name;
         this.description = description;
@@ -64,6 +79,14 @@ public class Course {
         this.createdDate = createdDate;
     }
 
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
@@ -71,6 +94,7 @@ public class Course {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", createdDate=" + createdDate +
+                ", students=" + students +
                 '}';
     }
 }
