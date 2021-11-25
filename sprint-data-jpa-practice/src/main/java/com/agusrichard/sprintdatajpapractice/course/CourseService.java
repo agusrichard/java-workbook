@@ -2,6 +2,7 @@ package com.agusrichard.sprintdatajpapractice.course;
 
 import com.agusrichard.sprintdatajpapractice.student.Student;
 import com.agusrichard.sprintdatajpapractice.student.StudentRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,12 +32,13 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
+    @Transactional
     public void registerStudent(Long studentId, Long courseId) {
         Student studentFound = studentRepository.findById(studentId).get();
         Course courseFound = courseRepository.findById(courseId).get();
         System.out.println(studentFound);
         System.out.println(courseFound);
-        courseFound.addStudent(studentFound);
-        courseRepository.save(courseFound);
+        studentFound.addCourse(courseFound);
+        studentRepository.save(studentFound);
     }
 }

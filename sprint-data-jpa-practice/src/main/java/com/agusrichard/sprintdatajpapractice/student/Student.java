@@ -93,6 +93,10 @@ public class Student {
         this.birthDate = birthDate;
     }
 
+    public void addCourse(Course course) {
+        this.courses.add(course);
+    }
+
     @Override
     public String toString() {
         return "Student{" +
