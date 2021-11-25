@@ -29,4 +29,9 @@ public class CourseController {
     public Course getById(@PathVariable Long id) {
         return courseService.getCourseById(id);
     }
+
+    @GetMapping("register-course")
+    public void registerCourse(@RequestParam Long studentId, @RequestParam Long courseId) {
+        courseService.registerStudent(studentId, courseId);
+    }
 }

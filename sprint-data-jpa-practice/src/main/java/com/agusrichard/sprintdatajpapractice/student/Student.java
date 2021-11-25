@@ -1,6 +1,7 @@
 package com.agusrichard.sprintdatajpapractice.student;
 
 import com.agusrichard.sprintdatajpapractice.course.Course;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -23,6 +24,7 @@ public class Student {
     @Column()
     private String fullname;
 
+    @JsonProperty("birth_date")
     @Column()
     private LocalDate birthDate;
 
@@ -32,19 +34,23 @@ public class Student {
     inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"))
     private List<Course> courses;
 
-    public Student(String email, String password, String fullname, LocalDate birthDate) {
+    public Student() {}
+
+    public Student(String email, String password, String fullname, LocalDate birthDate, List<Course> courses) {
         this.email = email;
         this.password = password;
         this.fullname = fullname;
         this.birthDate = birthDate;
+        this.courses = courses;
     }
 
-    public Student(Long id, String email, String password, String fullname, LocalDate birthDate) {
+    public Student(Long id, String email, String password, String fullname, LocalDate birthDate, List<Course> courses) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.fullname = fullname;
         this.birthDate = birthDate;
+        this.courses = courses;
     }
 
     public Long getId() {
