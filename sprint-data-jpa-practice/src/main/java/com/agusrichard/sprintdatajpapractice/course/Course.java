@@ -26,6 +26,8 @@ public class Course {
     @ManyToMany(mappedBy = "courses")
     private List<Student> students;
 
+    public Course(){}
+
     public Course(Long id, String name, String description, Date createdDate, List<Student> students) {
         this.id = id;
         this.name = name;
@@ -39,12 +41,6 @@ public class Course {
         this.description = description;
         this.createdDate = createdDate;
         this.students = students;
-    }
-
-    public Course(String name, String description, Date createdDate) {
-        this.name = name;
-        this.description = description;
-        this.createdDate = createdDate;
     }
 
     public Long getId() {
