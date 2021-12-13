@@ -12,13 +12,14 @@ import android.widget.EditText;
  * contact's id.
  * Note: You will not be able contacts which are "active" borrowers
  */
-public class EditContactActivity extends AppCompatActivity {
+public class EditContactActivity extends AppCompatActivity implements Observer {
 
     private ContactList contact_list = new ContactList();
     private Contact contact;
     private EditText email;
     private EditText username;
     private Context context;
+    private ContactListController contact_list_controller = new ContactListController(contact_list);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +27,12 @@ public class EditContactActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_contact);
 
         context = getApplicationContext();
-        contact_list.loadContacts(context);
+        contact_list_controller.loadContacts(context);
 
         Intent intent = getIntent();
         int pos = intent.getIntExtra("position", 0);
 
-        contact = contact_list.getContact(pos);
+        contact = contact_list_controller.getContact(pos);
 
         username = (EditText) findViewById(R.id.username);
         email = (EditText) findViewById(R.id.email);
@@ -90,5 +91,8 @@ public class EditContactActivity extends AppCompatActivity {
 
         // End EditContactActivity
         finish();
+    }
+
+    public void update() {
     }
 }

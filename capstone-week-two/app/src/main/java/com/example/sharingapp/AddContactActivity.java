@@ -16,6 +16,7 @@ public class AddContactActivity extends AppCompatActivity {
 
     private EditText username;
     private EditText email;
+    private ContactListController contact_list_controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class AddContactActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email);
 
         context = getApplicationContext();
-        contact_list.loadContacts(context);
+        contact_list_controller.loadContacts(context);
     }
 
     public void saveContact(View view) {
@@ -56,13 +57,14 @@ public class AddContactActivity extends AppCompatActivity {
 
         Contact contact = new Contact(username_str, email_str, null);
 
-        AddContactCommand add_contact_command = new AddContactCommand(contact_list, contact, context);
-        add_contact_command.execute();
+        ContactController contact_controller = new ContactController(contact);
 
-        boolean success = add_contact_command.isExecuted();
-        if (!success){
+        // Add item
+        boolean success = contact_list_controller.addContact(contact, context);
+        if (!success) {
             return;
         }
+
 
         // End AddContactActivity
         finish();
