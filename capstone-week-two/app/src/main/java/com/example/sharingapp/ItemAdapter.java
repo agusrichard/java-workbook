@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 
 /**
  * ItemAdapter is responsible for what information is displayed in ListView entries.
@@ -73,3 +73,4 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         return convertView;
     }
 }
+

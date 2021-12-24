@@ -12,11 +12,12 @@ import android.widget.EditText;
 public class AddContactActivity extends AppCompatActivity {
 
     private ContactList contact_list = new ContactList();
+    private ContactListController contact_list_controller = new ContactListController(contact_list);
+
     private Context context;
 
     private EditText username;
     private EditText email;
-    private ContactListController contact_list_controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,31 +41,23 @@ public class AddContactActivity extends AppCompatActivity {
             return;
         }
 
-        if (email_str.equals("")) {
-            email.setError("Empty field!");
-            return;
-        }
-
-        if (!email_str.contains("@")){
+        if (!email_str.contains("@")) {
             email.setError("Must be an email address!");
             return;
         }
 
-        if (!contact_list.isUsernameAvailable(username_str)){
+        if (!contact_list_controller.isUsernameAvailable(username_str)){
             username.setError("Username already taken!");
             return;
         }
 
         Contact contact = new Contact(username_str, email_str, null);
 
-        ContactController contact_controller = new ContactController(contact);
-
-        // Add item
+        // Add contact
         boolean success = contact_list_controller.addContact(contact, context);
         if (!success) {
             return;
         }
-
 
         // End AddContactActivity
         finish();

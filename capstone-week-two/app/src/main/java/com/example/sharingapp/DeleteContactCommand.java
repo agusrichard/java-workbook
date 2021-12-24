@@ -2,19 +2,23 @@ package com.example.sharingapp;
 
 import android.content.Context;
 
+/**
+ * Command to delete a contact
+ */
 public class DeleteContactCommand extends Command {
-    private ContactList contactList;
-    private Contact item;
+
+    private ContactList contact_list;
+    private Contact contact;
     private Context context;
 
-    public DeleteContactCommand(ContactList contactList, Contact item, Context context) {
-        this.contactList = contactList;
-        this.item = item;
+    public DeleteContactCommand(ContactList contact_list, Contact contact, Context context) {
+        this.contact_list = contact_list;
+        this.contact = contact;
         this.context = context;
     }
 
     public void execute() {
-        contactList.deleteContact(item);
-        setIsExecuted(contactList.saveContacts(context));
+        contact_list.deleteContact(contact);
+        setIsExecuted(contact_list.saveContacts(context));
     }
 }

@@ -27,3 +27,4 @@ public class AllItemsFragment extends ItemsFragment {
         return item_list_controller.getItems();
     }
 }
+

@@ -36,6 +36,7 @@ public class AddItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_item);
+
         title = (EditText) findViewById(R.id.title);
         maker = (EditText) findViewById(R.id.maker);
         description = (EditText) findViewById(R.id.description);
@@ -88,6 +89,7 @@ public class AddItemActivity extends AppCompatActivity {
             height.setError("Empty field!");
             return;
         }
+
         Item item = new Item(title_str, maker_str, description_str, image, null);
         ItemController item_controller = new ItemController(item);
         item_controller.setDimensions(length_str, width_str, height_str);

@@ -37,6 +37,7 @@ public class Item extends Observable {
             updateId(id);
         }
     }
+
     public String getId(){
         return this.id;
     }
