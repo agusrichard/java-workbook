@@ -2,16 +2,15 @@ package com.agusrichard.amenity_reservation_system;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
 
 
 @Controller
 public class HomeController {
 
     @GetMapping("/")
-    @ResponseBody
-    public String index() {
-        return "Hello World!";
-    }
+    public String index(Model model) {
 
+        return "index";
+    }
 }

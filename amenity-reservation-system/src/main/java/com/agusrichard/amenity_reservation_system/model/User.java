@@ -1,4 +1,4 @@
-package com.agusrichard.amenity_reservation_system.domain;
+package com.agusrichard.amenity_reservation_system.model;
 
 import java.time.OffsetDateTime;
 import java.util.Set;
