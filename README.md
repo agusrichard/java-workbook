@@ -1,4 +1,4 @@
-# learning-java
+# Java Workbook
 Repository of Learning Java notes
 
 Books i read:
